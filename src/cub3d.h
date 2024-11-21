@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 10:40:49 by tursescu          #+#    #+#             */
-/*   Updated: 2024/11/21 12:19:45 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/11/21 17:07:55 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,9 @@ typedef struct	s_game
 	void		*mlx;
 }	t_game;
 
+//INIT
+void	init_textures_null(t_textures *textures);
+void	init_game(t_game *game);
 //PARSING
 char	*trim_newline(char *line);
 t_map	*make_map(const char *file_path);
@@ -97,7 +100,9 @@ char	**convert_map(t_game *game);
 //FREEING
 void	free_list(t_map *head);
 int		propper_exit(t_game *game);
-void 	free_matrix(char **matrix);
+void 	free_2d_map(t_game *game);
+void	free_textures(t_textures *textures);
+void	free_matrix(char **matrix);
 //DEBUG
 void	print_map(t_map *head);
 void	print_matrix(char **map, size_t height);

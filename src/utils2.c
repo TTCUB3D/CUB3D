@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 11:56:25 by tursescu          #+#    #+#             */
-/*   Updated: 2024/11/21 12:17:35 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:20:07 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	**convert_map(t_game *game)
 	t_map	*temp;
 	size_t	i;
 	size_t	j;
+	size_t	k;
 
 	map_2d = malloc(game->height * sizeof(char *));
 	if (!map_2d)
@@ -51,9 +52,20 @@ char	**convert_map(t_game *game)
 	i = 0;
 	while (temp)
 	{
+		if (!temp->line)
+			return (err("Invalid map line!"), NULL);
 		map_2d[i] = malloc((game->width + 1) * sizeof(char));
 		if (!map_2d[i])
+		{
+			k = 0;
+			while (k < i)
+			{
+				free(map_2d[k]);
+				k++;
+			}
+			free(map_2d);
 			return (err("Memory error for map row!"), NULL);
+		}
 		j = 0;
 		while (temp->line[j] &&j < game->width)
 		{

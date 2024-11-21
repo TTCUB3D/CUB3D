@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 12:59:58 by tursescu          #+#    #+#             */
-/*   Updated: 2024/11/21 11:56:07 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/11/21 17:42:54 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,19 +50,23 @@ void	set_char_at(t_map *head, size_t x, size_t y, char c)
 void	get_map_dimensions(t_map *head, size_t *width, size_t *height)
 {
 	t_map	*temp;
-	size_t	line_length;
+	size_t	current_width;
+	size_t	max_width;
+	size_t	row_count;
 
 	temp = head;
-	*height = 0;
-	*width = 0;
+	max_width = 0;
+	row_count = 0;
 	while (temp)
 	{
-		line_length = ft_strlen(temp->line);
-		if (line_length > *width)
-			*width = line_length;
-		(*height)++;
+		current_width = ft_strlen(temp->line);
+		if (current_width > max_width)
+			max_width = current_width;
+		row_count++;
 		temp = temp->next;
 	}
+	*width = max_width;
+	*height = row_count;
 }
 
 void fill_from_zero(t_map *head)
@@ -100,7 +104,7 @@ int is_surrounded(t_game *game)
 	find_player_pos(game->map, &player_x, &player_y);
 	complete_flood(game->map, player_x, player_y);
 	temp = game->map;
-	print_map(temp);
+	// print_map(temp);
 	i = 0;
 	while (temp)
 	{

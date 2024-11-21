@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:48:18 by tursescu          #+#    #+#             */
-/*   Updated: 2024/11/21 11:28:12 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/11/21 17:25:10 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	flood_fill(t_map *head, size_t x, size_t y)
 	if (x >= height || y >= width)
 		return ;
 	current_char = get_char_at(head, x,y);
-	if (current_char == '1' || current_char == 'F')
+	if (current_char == '1' || current_char == 'F' || current_char == ' ')
 		return;
 	set_char_at(head, x, y, 'F');
 	flood_fill(head, x + 1, y);

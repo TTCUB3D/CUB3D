@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 14:01:04 by tursescu          #+#    #+#             */
-/*   Updated: 2024/11/21 11:57:23 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/11/21 17:28:13 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,7 @@ int	is_valid_adjacent(t_map *head, size_t x, size_t y)
 	down = get_char_at(head, x + 1, y);
 	left = get_char_at(head, x, y - 1);
 	right = get_char_at(head, x, y + 1);
-	if (up != 'F' && up != '1' && down != 'F' && down != '1' &&
-    	left != 'F' && left != '1' && right != 'F' && right != '1')
+	if (up == ' ' || down == ' ' || left == ' ' || right == ' ')
 		return (0);
 	return (1);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 13:47:34 by tursescu          #+#    #+#             */
-/*   Updated: 2024/11/21 11:43:43 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/11/21 15:02:18 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 t_map	*copy_map(t_map *og)
 {
-	t_map *new_head;
-	t_map *current;
-	t_map *new_node;
+	t_map	*new_head;
+	t_map	*current;
+	t_map	*new_node;
 
 	new_head = NULL;
 	current = og;
