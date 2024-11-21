@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 12:59:58 by tursescu          #+#    #+#             */
-/*   Updated: 2024/11/21 17:42:54 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/11/21 18:58:02 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ int is_surrounded(t_game *game)
 	find_player_pos(game->map, &player_x, &player_y);
 	complete_flood(game->map, player_x, player_y);
 	temp = game->map;
-	// print_map(temp);
 	i = 0;
 	while (temp)
 	{

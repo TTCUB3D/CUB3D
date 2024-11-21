@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 10:40:49 by tursescu          #+#    #+#             */
-/*   Updated: 2024/11/21 17:07:55 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/11/21 19:36:01 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ t_map	*make_map(const char *file_path);
 void	get_map_dimensions(t_map *head, size_t *width, size_t *height);
 void	find_player_pos(t_map *head, size_t *x, size_t *y);
 int 	player_found(t_map *head);
+int		only_one_player(t_map *head);
+int 	players_in_row(const char *line);
 int 	is_surrounded(t_game *game);
 void	flood_fill(t_map *head, size_t x, size_t y);
 int 	good_input(t_game *game);
@@ -87,6 +89,8 @@ int		parse_color(const char *line, int color[3]);
 void 	fill_from_zero(t_map *head);
 void 	complete_flood(t_map *head, size_t x, size_t y);
 int		is_valid_adjacent(t_map *head, size_t x, size_t y);
+int		has_bad_char(t_map *head);
+int		is_wrong_char(char c);
 //UTILS
 int		is_player(char c);
 t_map	*create_node(char *line);

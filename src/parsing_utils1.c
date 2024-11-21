@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*   parsing_utils1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 14:01:04 by tursescu          #+#    #+#             */
-/*   Updated: 2024/11/21 17:28:13 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/11/21 19:35:44 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,25 @@ int	is_valid_adjacent(t_map *head, size_t x, size_t y)
 	if (up == ' ' || down == ' ' || left == ' ' || right == ' ')
 		return (0);
 	return (1);
+}
+
+int	only_one_player(t_map *head)
+{
+	t_map	*temp;
+	int		total_count;
+	int		row_count;
+
+	total_count = 0;
+	temp = head;
+	while (temp)
+	{
+		row_count = players_in_row(temp->line);
+		if (row_count > 1)
+			return (0);
+		total_count += row_count;
+		if (total_count > 1)
+			return (0);
+		temp = temp->next;
+	}
+	return (total_count == 1);
 }
