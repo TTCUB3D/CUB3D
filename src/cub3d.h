@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 10:40:49 by tursescu          #+#    #+#             */
-/*   Updated: 2024/11/21 19:36:01 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/11/22 16:59:15 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ int		has_bad_char(t_map *head);
 int		is_wrong_char(char c);
 //UTILS
 int		is_player(char c);
+int		is_space(char c);
 t_map	*create_node(char *line);
 void	err(char *str);
 t_map	*copy_map(t_map *og);
@@ -101,6 +102,8 @@ int 	has_char(const char *str, char c);
 char	get_char_at(t_map *head, size_t x, size_t y);
 void	set_char_at(t_map *head, size_t x, size_t y, char c);
 char	**convert_map(t_game *game);
+void	eliminate_spaces(t_textures *textures);
+void	rmv_space_in_str(char **str);
 //FREEING
 void	free_list(t_map *head);
 int		propper_exit(t_game *game);
@@ -110,5 +113,6 @@ void	free_matrix(char **matrix);
 //DEBUG
 void	print_map(t_map *head);
 void	print_matrix(char **map, size_t height);
+void	print_texture_path(t_game *game);
 
 # endif

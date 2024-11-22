@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 11:15:58 by tursescu          #+#    #+#             */
-/*   Updated: 2024/11/21 19:21:51 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/11/22 17:00:06 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,14 @@ int good_input(t_game *game)
 	if (!game->textures)
 		return (err("Memory error for textures!"), 0);
 	if (!parse_textures_colors(&(game->map), game->textures))
-		return (0);	
+		return (0);
+	eliminate_spaces(game->textures);
     if (!player_found(game->map))
 		return (err("Player not found"), 0);
 	if (!only_one_player(game->map))
 		return (err("More than one player"), 0);
 	print_map(game->map);
+	print_texture_path(game);
 	if (has_bad_char(game->map))
 		return (err("Unrecognized charactr"), 0);
 	game->just_map = copy_map(game->map);

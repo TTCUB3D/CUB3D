@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 11:56:25 by tursescu          #+#    #+#             */
-/*   Updated: 2024/11/21 18:42:54 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/11/22 16:56:30 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,41 @@ char	**convert_map(t_game *game)
 	}
 	return (map_2d);
 }
+int is_space(char c)
+{
+	return (c == 32 || (c >= 9 && c <= 13));
+}
 
+void	eliminate_spaces(t_textures *textures)
+{
+	if (!textures)
+		return ;
+	rmv_space_in_str(&textures->no_line);
+	rmv_space_in_str(&textures->so_line);
+	rmv_space_in_str(&textures->we_line);
+	rmv_space_in_str(&textures->ea_line);
+}
+
+void	rmv_space_in_str(char **str)
+{
+	char	*src;
+	char	*new_str;
+	size_t	i;
+	size_t	j;
+
+	src = *str;
+	new_str = malloc(ft_strlen(src) + 1);
+	if (!new_str)
+		return ;
+	i = 0;
+	j = 0;
+	while (src[i])
+	{
+		if (!is_space(src[i]))
+			new_str[j++] = src[i];
+		i++;
+	}
+	new_str[j] = '\0';
+	free(*str);
+	*str = new_str;
+}

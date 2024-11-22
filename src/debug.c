@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 09:49:06 by tursescu          #+#    #+#             */
-/*   Updated: 2024/11/21 12:19:29 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/11/22 16:36:20 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,11 @@ void	print_matrix(char **map, size_t height)
 		printf("%s\n", map[i]);
 		i++;
 	}
+}
+
+void	print_texture_path(t_game *game)
+{
+	printf("N:%s\nS:%s\nW:%s\nE:%s\n", game->textures->no_line,
+		game->textures->so_line, game->textures->we_line,
+		game->textures->ea_line);
 }
