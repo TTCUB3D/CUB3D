@@ -1,6 +1,6 @@
 NAME = cub3D
 CC = gcc
-CFLAGZ = -Wall -Wextra -Werror -lpthread
+CFLAGZ = -Wall -Wextra -Werror -Iinclude/mlx
 SRCS = 	src/main.c
 
 MLX_DIR = minilibx-linux
@@ -17,7 +17,7 @@ OBJS = $(SRCS:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS) $(MLX_DIR)/$(MLX_LIB) $(LIBFTDIR)/$(LIBFT)
-	$(CC) $(CFLAGZ) -o $(NAME) $(OBJS) -L$(MLX_DIR) -L$(LIBFTDIR) -l:$(LIBFT) -lmlx -lXext -lx11 -lm
+	$(CC) $(CFLAGZ) -o $(NAME) $(OBJS) -L$(MLX_DIR) -L$(LIBFTDIR) -l:$(LIBFT) -lmlx -lXext -L/usr/lib/X11 -lX11 -lm
 
 $(MLX_DIR)/$(MLX_LIB):
 	$(MAKE) -C $(MLX_DIR)
@@ -27,10 +27,11 @@ $(LIBFTDIR)/$(LIBFT):
 
 clean:
 	$(MAKE) clean -C $(MLX_DIR)
+	$(MAKE) clean -C $(LIBFTDIR)
 	rm -f $(OBJS) 
 	rm -f $(OBJSBON)
 
 fclean: clean
-	rm -f $(NAME) $(B_NAME)
+	rm -f $(NAME)
 	
 re: fclean all
