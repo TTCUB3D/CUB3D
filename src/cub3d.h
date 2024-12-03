@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 10:40:49 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/03 11:57:04 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/03 13:13:42 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # include "../dirs/libft/libft.h"
 # include "../dirs/mlx/mlx.h"
 
+# define TILE_SIZE 60
+
 # define ESC_KEY 65307
 # define W_KEY 119
 # define S_KEY 115
@@ -35,10 +37,10 @@
 # define RED "\033[31m"
 # define RESET "\033[0m"
 
-# define TEXTURE_NO "./textures/NO.xpm"
-# define TEXTURE_SO "./textures/SO.xpm"
-# define TEXTURE_WE "./textures/WE.xpm"
-# define TEXTURE_EA "./textures/EA.xpm"
+# define TEXTURE_NO "../textures/NO.xpm"
+# define TEXTURE_SO "../textures/SO.xpm"
+# define TEXTURE_WE "../textures/WE.xpm"
+# define TEXTURE_EA "../textures/EA.xpm"
 
 
 typedef struct  s_map
@@ -72,6 +74,11 @@ typedef struct	s_game
 //INIT
 void	init_textures_null(t_textures *textures);
 void	init_game(t_game *game);
+void	textrue_init(t_game *game, t_textures *textures);
+void	window_init(t_game *game);
+//RENDERING
+void	render_map(t_game *game);
+void	render_textures(char target, t_game *game, int x, int y);
 //PARSING
 char	*trim_newline(char *line);
 t_map	*make_map(const char *file_path);
@@ -104,12 +111,17 @@ char	**convert_map(t_game *game);
 void	eliminate_spaces(t_textures *textures);
 void	rmv_space_in_str(char **str);
 int		is_empty_line(char *line);
+//HOOKS
+int		close_on_button(t_game *game);
+int		key_hook(int keycode, t_game *game);
+void	setup_hooks(t_game *game);
 //FREEING
 void	free_list(t_map *head);
 int		propper_exit(t_game *game);
 void 	free_2d_map(t_game *game);
 void	free_textures(t_textures *textures);
 void	free_matrix(char **matrix);
+void	free_program(t_game *game);
 //DEBUG
 void	print_map(t_map *head);
 void	print_matrix(char **map, size_t height);

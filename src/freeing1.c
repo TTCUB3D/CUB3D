@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:23:00 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/03 11:56:58 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/03 14:08:06 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 // 	}
 // }
 
-static void	free_program(t_game *game)
+void	free_program(t_game *game)
 {
 	if (game->map)
 	{
