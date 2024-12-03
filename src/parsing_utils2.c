@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 19:09:20 by tursescu          #+#    #+#             */
-/*   Updated: 2024/11/21 19:33:00 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/03 11:38:13 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,17 @@ int players_in_row(const char *line)
 		line++;
 	}
 	return (count);
+}
+
+int	is_empty_line(char *line)
+{
+	if (!line)
+		return (1);
+	while (*line)
+	{
+		if (!is_space(*line))
+			return (0);
+		line++;
+	}
+	return (1);
 }

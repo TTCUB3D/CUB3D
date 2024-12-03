@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 11:15:58 by tursescu          #+#    #+#             */
-/*   Updated: 2024/11/22 17:00:06 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/03 11:59:47 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,11 @@ int good_input(t_game *game)
 		return (err("Player not found"), 0);
 	if (!only_one_player(game->map))
 		return (err("More than one player"), 0);
-	print_map(game->map);
 	print_texture_path(game);
+	print_map(game->map);
 	if (has_bad_char(game->map))
 		return (err("Unrecognized charactr"), 0);
-	game->just_map = copy_map(game->map);
-	if (!game->just_map)
-		return (err("Failedto copy map."), 0);
-	get_map_dimensions(game->just_map, &game->width, &game->height);
+	get_map_dimensions(game->map, &game->width, &game->height);
 	game->map_2d = convert_map(game);
 	if (!game->map_2d)
 		return (err("Failed to convert map"), 0);
@@ -77,6 +74,12 @@ t_map	*make_map(const char *file_path)
 	while (line)
 	{
 		line = trim_newline(line);
+		if (is_empty_line(line))
+		{
+			free(line);
+			line = get_next_line(fd);
+			continue;
+		}
 		new_node = create_node(line);
 		if (!new_node)
 			break ;

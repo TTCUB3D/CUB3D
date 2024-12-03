@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 11:56:25 by tursescu          #+#    #+#             */
-/*   Updated: 2024/11/22 16:56:30 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/03 11:40:51 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	**convert_map(t_game *game)
 	map_2d = malloc(game->height * sizeof(char *));
 	if (!map_2d)
 		return (err("Memory error for 2d_map!"), NULL);
-	temp = game->just_map;
+	temp = game->map;
 	i = 0;
 	while (temp)
 	{

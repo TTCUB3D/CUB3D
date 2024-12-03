@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 10:40:49 by tursescu          #+#    #+#             */
-/*   Updated: 2024/11/22 16:59:15 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/03 11:57:04 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ typedef struct	s_textures
 typedef struct	s_game
 {
 	t_map		*map;
-	t_map		*just_map;
 	char		**map_2d;
 	size_t		width;
 	size_t		height;
@@ -104,6 +103,7 @@ void	set_char_at(t_map *head, size_t x, size_t y, char c);
 char	**convert_map(t_game *game);
 void	eliminate_spaces(t_textures *textures);
 void	rmv_space_in_str(char **str);
+int		is_empty_line(char *line);
 //FREEING
 void	free_list(t_map *head);
 int		propper_exit(t_game *game);
