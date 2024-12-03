@@ -139,10 +139,9 @@ void	draw_minimap(t_mlx *mlx)
 
 }
 
-void draw_minimap_player(t_mlx *mlx)
-{
-	
-}
+// void draw_minimap_player(t_mlx *mlx)
+// {
+// }
 
 void start_game(t_mlx *mlx)
 {
@@ -156,7 +155,7 @@ void start_game(t_mlx *mlx)
 	int height = 60;
 	mlx->background_img = mlx_xpm_file_to_image(mlx->mlx_pointer, PATH_TO_MINIMAP, &width,&height);
 	draw_minimap(mlx);
-	draw_minimap_player(mlx);
+	// draw_minimap_player(mlx);
 	mlx_loop(mlx->mlx_pointer);
 }
 
