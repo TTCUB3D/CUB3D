@@ -1,13 +1,13 @@
-#ifndef CUB3D_H
-# define CUB3D_H
+#ifndef CUB3DD_H
+# define CUB3DD_H
 
-#define PATH_TO_MINIMAP "/home/tlupu/CUB3D/CUB3D/inc/minimap.xpm"
+# define PATH_TO_MINIMAP "/home/tlupu/CUB3D/CUB3D/inc/minimap.xpm"
 
-# include "../minilibx-linux/mlx.h"
 # include <math.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
+#include "../src/cub3d.h"
 # include <sys/time.h>
 # include <unistd.h>
 
@@ -28,14 +28,14 @@ typedef struct s_player
 
 // }			t_raycst;
 
-
-//need a poiner for each struct for easier acacces
+// need a poiner for each struct for easier acacces
 typedef struct s_mlx
 {
 	void	*background_img;
 	void	*window;
-	void 	*mlx_pointer; 
-	t_player *player; //pointer to players struct 
+	void	*mlx_pointer;
+	void	*img[4];
+	t_player *player; // pointer to players struct
 }			t_mlx;
 
 #endif
