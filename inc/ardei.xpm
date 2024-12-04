@@ -1,7 +1,7 @@
 /* XPM */
 static char * ardei_xpm[] = {
 "49 60 1603 2",
-"  	c None",
+"  	c #689090",
 ". 	c #7BB258",
 "+ 	c #75AC54",
 "@ 	c #7DB459",

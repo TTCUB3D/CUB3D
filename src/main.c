@@ -1,5 +1,6 @@
 #include "cub3d.h"
 
+#define MINI_P_TILE 10
 #define PI 3.14159265
 #define FOV 60
 
@@ -147,7 +148,7 @@ void draw_minimap_player(t_mlx *mlx, t_game *game)
 			if (game->map_2d[i][j] && (game->map_2d[i][j] == 'N' || game->map_2d[i][j] == 'W' || game->map_2d[i][j] == 'E' || game->map_2d[i][j] == 'S'))
 			{
 				mlx_put_image_to_window(mlx->mlx_pointer, mlx->window,
-					mlx->miniplayer_img, j , i );
+					mlx->miniplayer_img, j * MINI_TILE_SIZE , i * MINI_TILE_SIZE);
 					return;
 			}
 			j++;

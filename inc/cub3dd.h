@@ -1,9 +1,9 @@
 #ifndef CUB3DD_H
 # define CUB3DD_H
 
-# define PATH_TO_MINIMAP "/home/tlupu/CUB3D/CUB3D/inc/minimap.xpm"
-# define PATH_TO_MINIFLOOR "/home/tlupu/CUB3D/CUB3D/inc/minifloor.xpm"
-# define PATH_TO_MINIPLAYER "/home/tlupu/CUB3D/CUB3D/inc/ardei.xpm"
+# define PATH_TO_MINIMAP "./inc/minimap.xpm"
+# define PATH_TO_MINIFLOOR "./inc/minifloor.xpm"
+# define PATH_TO_MINIPLAYER "./inc/ardei.xpm"
 
 # include <math.h>
 # include <stdbool.h>

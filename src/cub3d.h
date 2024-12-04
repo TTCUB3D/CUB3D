@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 10:40:49 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/04 15:51:49 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/04 16:08:40 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@
 # define RED "\033[31m"
 # define RESET "\033[0m"
 
-# define TEXTURE_NO "../inc/NO.xpm"
-# define TEXTURE_SO "../inc/SO.xpm"
-# define TEXTURE_WE "../inc/WE.xpm"
-# define TEXTURE_EA "../inc/EA.xpm"
+# define TEXTURE_NO "./inc/NO.xpm"
+# define TEXTURE_SO "./inc/SO.xpm"
+# define TEXTURE_WE "./inc/WE.xpm"
+# define TEXTURE_EA "./inc/EA.xpm"
 
 typedef struct s_map
 {
