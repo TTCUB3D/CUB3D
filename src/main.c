@@ -134,6 +134,7 @@ void	draw_minimap(t_mlx *mlx, t_game *game)
 
 // void draw_minimap_player(t_mlx *mlx)
 // {
+
 // }
 
 void	start_game(t_mlx *mlx, t_game *game)
@@ -142,8 +143,8 @@ void	start_game(t_mlx *mlx, t_game *game)
 	int	height;
 
 	mlx->mlx_pointer = mlx_init();
-	mlx->window = mlx_new_window(mlx->mlx_pointer, game->width * TILE_SIZE * 2,
-			game->height * TILE_SIZE * 2, "cub3d");
+	mlx->window = mlx_new_window(mlx->mlx_pointer, game->width * TILE_SIZE,
+			game->height * TILE_SIZE, "cub3d");
 	if (!mlx->window)
 	{
 		printf("Error: Window creation failed\n");
