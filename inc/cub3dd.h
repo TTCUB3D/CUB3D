@@ -1,8 +1,9 @@
 #ifndef CUB3DD_H
 # define CUB3DD_H
 
-# define PATH_TO_MINIMAP "/home/tursescu/Desktop/cub3dgit/inc/minimap.xpm"
-# define PATH_TO_MINIFLOOR "/home/tursescu/Desktop/cub3dgit/inc/minifloor.xpm"
+# define PATH_TO_MINIMAP "/home/tlupu/CUB3D/CUB3D/inc/minimap.xpm"
+# define PATH_TO_MINIFLOOR "/home/tlupu/CUB3D/CUB3D/inc/minifloor.xpm"
+# define PATH_TO_MINIPLAYER "/home/tlupu/CUB3D/CUB3D/inc/ardei.xpm"
 
 # include <math.h>
 # include <stdbool.h>
@@ -34,6 +35,7 @@ typedef struct s_mlx
 {
 	void	*background_img;
 	void	*minifloor_img;
+	void	*miniplayer_img;
 	void	*window;
 	void	*mlx_pointer;
 	void	*img[4];

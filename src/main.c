@@ -120,7 +120,7 @@ void	draw_minimap(t_mlx *mlx, t_game *game)
 				mlx_put_image_to_window(mlx->mlx_pointer, mlx->window,
 					mlx->background_img, j * MINI_TILE_SIZE, i * MINI_TILE_SIZE);
 			}
-			else if (game->map_2d[i][j] && game->map_2d[i][j] == '0')
+			else if ((game->map_2d[i][j]) && (game->map_2d[i][j] == '0' || game->map_2d[i][j] == 'N' || game->map_2d[i][j] == 'W' || game->map_2d[i][j] == 'E' || game->map_2d[i][j] == 'S'))
 			{
 				mlx_put_image_to_window(mlx->mlx_pointer, mlx->window,
 					mlx->minifloor_img, j * MINI_TILE_SIZE ,i * MINI_TILE_SIZE);
@@ -137,16 +137,18 @@ void draw_minimap_player(t_mlx *mlx, t_game *game)
 	size_t	j;
 
 	i = 0;
+	(void)mlx;
 	j = 0;
 	while (i < game->height)
 	{
 		j = 0;
 		while (j < game->width)
 		{
-			if (game->map_2d[i][j] && game->map_2d[i][j] == '1')
+			if (game->map_2d[i][j] && (game->map_2d[i][j] == 'N' || game->map_2d[i][j] == 'W' || game->map_2d[i][j] == 'E' || game->map_2d[i][j] == 'S'))
 			{
 				mlx_put_image_to_window(mlx->mlx_pointer, mlx->window,
-					mlx->background_img, j * MINI_TILE_SIZE, i * MINI_TILE_SIZE);
+					mlx->miniplayer_img, j , i );
+					return;
 			}
 			j++;
 		}
@@ -173,8 +175,10 @@ void	start_game(t_mlx *mlx, t_game *game)
 			PATH_TO_MINIMAP, &width, &height);
 	mlx->minifloor_img = mlx_xpm_file_to_image(mlx->mlx_pointer,
 			PATH_TO_MINIFLOOR, &width, &height);
+	mlx->miniplayer_img = mlx_xpm_file_to_image(mlx->mlx_pointer,
+			PATH_TO_MINIPLAYER, &width, &height);
 	draw_minimap(mlx, game);
-	draw_minimap_player(mlx);
+	draw_minimap_player(mlx, game);
 	mlx_loop(mlx->mlx_pointer);
 }
 
