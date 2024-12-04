@@ -1,7 +1,7 @@
 #include "cub3d.h"
 
 #define PI 3.14159265
-#define	FOV 60
+#define FOV 60
 
 void	init_angle(t_player *player)
 {
@@ -14,10 +14,10 @@ void	init_angle(t_player *player)
 	else if (player->direction == 'E')
 		player->player_angle = 0.0f;
 	else
-    {
+	{
 		printf("Error: player coordinates\n");
-        exit(1);
-    }
+		exit(1);
+	}
 }
 
 // Initalising player struct
@@ -33,14 +33,14 @@ int	get_player_x_position(t_game *game)
 		j = 0;
 		while (game->map_2d[i][j])
 		{
-			if (game->map_2d[i][j] == 'N' || game->map_2d[i][j] == 'S' || game->map_2d[i][j] == 'W'
-				|| game->map_2d[i][j] == 'E')
+			if (game->map_2d[i][j] == 'N' || game->map_2d[i][j] == 'S'
+				|| game->map_2d[i][j] == 'W' || game->map_2d[i][j] == 'E')
 				return (j);
 			j++;
 		}
 		i++;
 	}
-    return(0);
+	return (0);
 }
 
 int	get_player_y_position(t_game *game)
@@ -54,14 +54,14 @@ int	get_player_y_position(t_game *game)
 		j = 0;
 		while (game->map_2d[i][j])
 		{
-			if (game->map_2d[i][j] == 'N' || game->map_2d[i][j] == 'S' || game->map_2d[i][j] == 'W'
-				|| game->map_2d[i][j] == 'E')
+			if (game->map_2d[i][j] == 'N' || game->map_2d[i][j] == 'S'
+				|| game->map_2d[i][j] == 'W' || game->map_2d[i][j] == 'E')
 				return (i);
-			j++; 
+			j++;
 		}
 		i++;
 	}
-    return(0);
+	return (0);
 }
 
 // void	init_coordinates(t_player *player)
@@ -83,62 +83,78 @@ int	get_player_y_position(t_game *game)
 
 void	init_x_y(t_player *player, t_game *game)
 {
-
 	player->player_x = get_player_x_position(game) + 0.003f;
 	player->player_y = get_player_y_position(game) + 0.003f;
 	player->fov = FOV;
 }
-t_player *init_player(char direction, t_game *game)
+t_player	*init_player(char direction, t_game *game)
 {
-	t_player *player;
+	t_player	*player;
+
 	player = (t_player *)malloc(sizeof(t_player));
 	if (!player)
 	{
 		free(player);
-		return NULL;
+		return (NULL);
 	}
 	player->direction = direction;
 	init_angle(player);
 	init_x_y(player, game);
 	// init_coordinates(player);
-	return(player);
+	return (player);
 }
 
 void	draw_minimap(t_mlx *mlx, t_game *game)
 {
-	size_t i = 0;
-	size_t j = 0;
-	while (i < game->width)
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
+	while (i < game->height)
 	{
 		j = 0;
-		while (j < game->height)
+		while (j < game->width)
 		{
-				mlx_put_image_to_window(mlx->mlx_pointer, mlx->window, mlx->background_img,
-					i * 60, j * 60);
+			if (game->map_2d[i][j] && game->map_2d[i][j] == '1')
+			{
+				mlx_put_image_to_window(mlx->mlx_pointer, mlx->window,
+					mlx->background_img, j * MINI_TILE_SIZE, i * MINI_TILE_SIZE);
+			}
+			else if (game->map_2d[i][j] && game->map_2d[i][j] == '0')
+			{
+				mlx_put_image_to_window(mlx->mlx_pointer, mlx->window,
+					mlx->minifloor_img, j * MINI_TILE_SIZE ,i * MINI_TILE_SIZE);
+			}
 			j++;
 		}
 		i++;
 	}
-
 }
 
 // void draw_minimap_player(t_mlx *mlx)
 // {
 // }
 
-void start_game(t_mlx *mlx, t_game *game)
+void	start_game(t_mlx *mlx, t_game *game)
 {
+	int	width;
+	int	height;
+
 	mlx->mlx_pointer = mlx_init();
-    mlx->window = mlx_new_window(mlx->mlx_pointer, game->width * TILE_SIZE, game->height * TILE_SIZE , "cub3d");
-	printf("game H is:%zu\ngame W is:%zu\n", game->height,game->width);
-    if (!mlx->window)
-    {
-        printf("Error: Window creation failed\n");
-        exit(1);
-    }
-	int width = 60;
-	int height = 60;
-	mlx->background_img = mlx_xpm_file_to_image(mlx->mlx_pointer, PATH_TO_MINIMAP, &width,&height);
+	mlx->window = mlx_new_window(mlx->mlx_pointer, game->width * TILE_SIZE * 2,
+			game->height * TILE_SIZE * 2, "cub3d");
+	if (!mlx->window)
+	{
+		printf("Error: Window creation failed\n");
+		exit(1);
+	}
+	width = 60;
+	height = 60;
+	mlx->background_img = mlx_xpm_file_to_image(mlx->mlx_pointer,
+			PATH_TO_MINIMAP, &width, &height);
+	mlx->minifloor_img = mlx_xpm_file_to_image(mlx->mlx_pointer,
+			PATH_TO_MINIFLOOR, &width, &height);
 	draw_minimap(mlx, game);
 	// draw_minimap_player(mlx);
 	mlx_loop(mlx->mlx_pointer);
@@ -146,9 +162,9 @@ void start_game(t_mlx *mlx, t_game *game)
 
 int	main(int ac, char **av)
 {
-	t_game	game;
-	t_mlx	mlx;
-	t_player *player;
+	t_game		game;
+	t_mlx		mlx;
+	t_player	*player;
 
 	init_game(&game);
 	if (ac != 2)
@@ -167,7 +183,7 @@ int	main(int ac, char **av)
 	return (0);
 }
 
-int good_input(t_game *game)
+int	good_input(t_game *game)
 {
 	game->textures = malloc(sizeof(t_textures));
 	if (!game->textures)
@@ -175,7 +191,7 @@ int good_input(t_game *game)
 	if (!parse_textures_colors(&(game->map), game->textures))
 		return (0);
 	eliminate_spaces(game->textures);
-    if (!player_found(game->map))
+	if (!player_found(game->map))
 		return (err("Player not found"), 0);
 	if (!only_one_player(game->map))
 		return (err("More than one player"), 0);
@@ -187,9 +203,9 @@ int good_input(t_game *game)
 	game->map_2d = convert_map(game);
 	if (!game->map_2d)
 		return (err("Failed to convert map"), 0);
-    if (!is_surrounded(game))
-        return (err("Map is not enclosed by walls"), 0);
-    return (1);
+	if (!is_surrounded(game))
+		return (err("Map is not enclosed by walls"), 0);
+	return (1);
 }
 
 t_map	*make_map(const char *file_path)
@@ -214,7 +230,7 @@ t_map	*make_map(const char *file_path)
 		{
 			free(line);
 			line = get_next_line(fd);
-			continue;
+			continue ;
 		}
 		new_node = create_node(line);
 		if (!new_node)

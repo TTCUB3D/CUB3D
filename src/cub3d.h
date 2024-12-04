@@ -6,7 +6,7 @@
 /*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 10:40:49 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/03 14:35:56 by tlupu            ###   ########.fr       */
+/*   Updated: 2024/12/04 14:25:17 by tlupu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@
 # include <string.h>
 # include <sys/time.h>
 
-# define TILE_SIZE 60
+# define TILE_SIZE 120
+# define MINI_TILE_SIZE 30
 
 # define ESC_KEY 65307
 # define W_KEY 119

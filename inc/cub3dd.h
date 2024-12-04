@@ -2,6 +2,7 @@
 # define CUB3DD_H
 
 # define PATH_TO_MINIMAP "/home/tlupu/CUB3D/CUB3D/inc/minimap.xpm"
+# define PATH_TO_MINIFLOOR "/home/tlupu/CUB3D/CUB3D/inc/minifloor.xpm"
 
 # include <math.h>
 # include <stdbool.h>
@@ -32,6 +33,7 @@ typedef struct s_player
 typedef struct s_mlx
 {
 	void	*background_img;
+	void	*minifloor_img;
 	void	*window;
 	void	*mlx_pointer;
 	void	*img[4];
