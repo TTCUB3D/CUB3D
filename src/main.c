@@ -1,6 +1,7 @@
 #include "cub3d.h"
 
 #define MINI_P_TILE 10
+#define PLAYER_COLOR 0xFF0000
 #define PI 3.14159265
 #define FOV 60
 
@@ -119,12 +120,15 @@ void	draw_minimap(t_mlx *mlx, t_game *game)
 			if (game->map_2d[i][j] && game->map_2d[i][j] == '1')
 			{
 				mlx_put_image_to_window(mlx->mlx_pointer, mlx->window,
-					mlx->background_img, j * MINI_TILE_SIZE, i * MINI_TILE_SIZE);
+					mlx->background_img, j * MINI_TILE_SIZE, i
+					* MINI_TILE_SIZE);
 			}
-			else if ((game->map_2d[i][j]) && (game->map_2d[i][j] == '0' || game->map_2d[i][j] == 'N' || game->map_2d[i][j] == 'W' || game->map_2d[i][j] == 'E' || game->map_2d[i][j] == 'S'))
+			else if ((game->map_2d[i][j]) && (game->map_2d[i][j] == '0'
+					|| game->map_2d[i][j] == 'N' || game->map_2d[i][j] == 'W'
+					|| game->map_2d[i][j] == 'E' || game->map_2d[i][j] == 'S'))
 			{
 				mlx_put_image_to_window(mlx->mlx_pointer, mlx->window,
-					mlx->minifloor_img, j * MINI_TILE_SIZE ,i * MINI_TILE_SIZE);
+					mlx->minifloor_img, j * MINI_TILE_SIZE, i * MINI_TILE_SIZE);
 			}
 			j++;
 		}
@@ -132,24 +136,34 @@ void	draw_minimap(t_mlx *mlx, t_game *game)
 	}
 }
 
-void draw_minimap_player(t_mlx *mlx, t_game *game)
+void	draw_minimap_player(t_mlx *mlx, t_game *game)
 {
 	size_t	i;
 	size_t	j;
+	size_t	x;
+	size_t	y;
 
 	i = 0;
-	(void)mlx;
 	j = 0;
 	while (i < game->height)
 	{
 		j = 0;
 		while (j < game->width)
 		{
-			if (game->map_2d[i][j] && (game->map_2d[i][j] == 'N' || game->map_2d[i][j] == 'W' || game->map_2d[i][j] == 'E' || game->map_2d[i][j] == 'S'))
+			if (game->map_2d[i][j] == 'N' || game->map_2d[i][j] == 'W'
+				|| game->map_2d[i][j] == 'E' || game->map_2d[i][j] == 'S')
 			{
-				mlx_put_image_to_window(mlx->mlx_pointer, mlx->window,
-					mlx->miniplayer_img, j * MINI_TILE_SIZE , i * MINI_TILE_SIZE);
-					return;
+				x = j * MINI_P_TILE;
+				y = i * MINI_P_TILE;
+				for (int dy = 0; dy < MINI_P_TILE; dy++)
+				{
+					for (int dx = 0; dx < MINI_P_TILE; dx++)
+					{
+						mlx_pixel_put(mlx->mlx_pointer, mlx->window, x + dx, y
+							+ dy, PLAYER_COLOR);
+					}
+				}
+				return ;
 			}
 			j++;
 		}
@@ -180,8 +194,11 @@ void	start_game(t_mlx *mlx, t_game *game)
 			PATH_TO_MINIPLAYER, &width, &height);
 	draw_minimap(mlx, game);
 	draw_minimap_player(mlx, game);
+	mlx->game = game;
+	setup_hooks(mlx);
 	mlx_loop(mlx->mlx_pointer);
 }
+//MAIN
 
 int	main(int ac, char **av)
 {
@@ -201,6 +218,7 @@ int	main(int ac, char **av)
 		exit(1);
 	}
 	player = init_player('N', &game);
+	mlx.player = player;
 	start_game(&mlx, &game);
 	propper_exit(&game);
 	return (0);

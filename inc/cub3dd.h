@@ -5,6 +5,8 @@
 # define PATH_TO_MINIFLOOR "./inc/minifloor.xpm"
 # define PATH_TO_MINIPLAYER "./inc/ardei.xpm"
 
+
+
 # include <math.h>
 # include <stdbool.h>
 # include <stdio.h>
@@ -12,6 +14,9 @@
 #include "../src/cub3d.h"
 # include <sys/time.h>
 # include <unistd.h>
+
+typedef struct s_game t_game;
+
 
 // struct to hold all the player info
 typedef struct s_player
@@ -40,6 +45,14 @@ typedef struct s_mlx
 	void	*mlx_pointer;
 	void	*img[4];
 	t_player *player; // pointer to players struct
+	t_game	*game;
 }			t_mlx;
+
+
+t_player	*init_player(char direction, t_game *game);
+void	draw_minimap(t_mlx *mlx, t_game *game);
+void draw_minimap_player(t_mlx *mlx, t_game *game);
+void	init_x_y(t_player *player, t_game *game);
+
 
 #endif

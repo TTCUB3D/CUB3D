@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 10:40:49 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/04 16:08:40 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/04 18:52:21 by tlupu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ typedef struct s_game
 	size_t			width;
 	size_t			height;
 	t_textures		*textures;
+	t_mlx			*mlx;
+	t_player		*player;
 }					t_game;
 
 
@@ -117,8 +119,8 @@ void				rmv_space_in_str(char **str);
 int					is_empty_line(char *line);
 // HOOKS
 int					close_on_button(t_game *game);
-int					key_hook(int keycode, t_game *game);
-void				setup_hooks(t_game *game);
+int					key_hook(int keycode, t_mlx *game);
+void				setup_hooks(t_mlx *mlx);
 // FREEING
 void				free_list(t_map *head);
 int					propper_exit(t_game *game);

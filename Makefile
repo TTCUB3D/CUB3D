@@ -6,12 +6,12 @@
 #    By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/15 10:51:39 by tursescu          #+#    #+#              #
-#    Updated: 2024/12/03 14:53:08 by tlupu            ###   ########.fr        #
+#    Updated: 2024/12/04 18:15:10 by tlupu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC = src/parsing_utils1.c src/utils1.c src/main.c src/parsing1.c src/parsing2.c src/freeing1.c\
-		src/debug.c src/utils2.c src/freeing2.c src/init.c src/parsing_utils2.c
+		src/debug.c src/utils2.c src/freeing2.c src/init.c src/parsing_utils2.c src/hooks.c
 CC = cc
 RM = rm -f
 LIBFT_DIR = dirs/libft
