@@ -1,8 +1,8 @@
 #ifndef CUB3DD_H
 # define CUB3DD_H
 
-# define PATH_TO_MINIMAP "/home/tursescu/Desktop/cub3dgit/inc/minimap.xpm"
-# define PATH_TO_MINIFLOOR "/home/tursescu/Desktop/cub3dgit/inc/minifloor.xpm"
+# define PATH_TO_MINIMAP "./inc/minimap.xpm"
+# define PATH_TO_MINIFLOOR "./inc/minifloor.xpm"
 
 # include <math.h>
 # include <stdbool.h>
