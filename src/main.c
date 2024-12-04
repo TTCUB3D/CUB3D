@@ -110,7 +110,6 @@ void	draw_minimap(t_mlx *mlx, t_game *game)
 	size_t	j;
 
 	i = 0;
-	j = 0;
 	while (i < game->height)
 	{
 		j = 0;
