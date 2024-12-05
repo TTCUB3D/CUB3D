@@ -1,5 +1,7 @@
 #include "cub3d.h"
 
+
+#define GRID_CLOLUR 0x000000
 #define MINI_P_TILE 10
 #define PLAYER_COLOR 0xFF0000
 #define PI 3.14159265
@@ -110,7 +112,9 @@ void	draw_minimap(t_mlx *mlx, t_game *game)
 {
 	size_t	i;
 	size_t	j;
+	mlx->facts = false;
 
+	mlx_clear_window(mlx->mlx_pointer, mlx->window);
 	i = 0;
 	while (i < game->height)
 	{
@@ -129,6 +133,22 @@ void	draw_minimap(t_mlx *mlx, t_game *game)
 			{
 				mlx_put_image_to_window(mlx->mlx_pointer, mlx->window,
 					mlx->minifloor_img, j * MINI_TILE_SIZE, i * MINI_TILE_SIZE);
+				// if (!mlx->facts)
+				// {
+				for (int x = 0; x < MINI_TILE_SIZE; x++)
+				{
+					mlx_pixel_put(mlx->mlx_pointer, mlx->window, (j * MINI_TILE_SIZE) + x, (i * MINI_TILE_SIZE), GRID_CLOLUR);
+					mlx_pixel_put(mlx->mlx_pointer, mlx->window, (j * MINI_TILE_SIZE) +  x, (i + 1) * MINI_TILE_SIZE - 1, GRID_CLOLUR);
+				}
+				for (int y = 0; y < MINI_TILE_SIZE; y++)
+				{
+					mlx_pixel_put(mlx->mlx_pointer, mlx->window, (j * MINI_TILE_SIZE), (i * MINI_TILE_SIZE) + y, GRID_CLOLUR);
+					mlx_pixel_put(mlx->mlx_pointer, mlx->window, (j + 1) *  MINI_TILE_SIZE -1 , i  * MINI_TILE_SIZE + y, GRID_CLOLUR);
+				}
+				// mlx->facts = true;
+					
+				// }
+				
 			}
 			j++;
 		}
@@ -153,17 +173,16 @@ void	draw_minimap_player(t_mlx *mlx, t_game *game)
 			if (game->map_2d[i][j] == 'N' || game->map_2d[i][j] == 'W'
 				|| game->map_2d[i][j] == 'E' || game->map_2d[i][j] == 'S')
 			{
-				x = j * MINI_P_TILE;
-				y = i * MINI_P_TILE;
+				x = j * MINI_TILE_SIZE;
+				y = i * MINI_TILE_SIZE;
 				for (int dy = 0; dy < MINI_P_TILE; dy++)
 				{
 					for (int dx = 0; dx < MINI_P_TILE; dx++)
 					{
-						mlx_pixel_put(mlx->mlx_pointer, mlx->window, x + dx, y
+						mlx_pixel_put(mlx->mlx_pointer, mlx->window, mlx->player->player_x + dx, mlx->player->player_y
 							+ dy, PLAYER_COLOR);
 					}
 				}
-				return ;
 			}
 			j++;
 		}
@@ -195,6 +214,7 @@ void	start_game(t_mlx *mlx, t_game *game)
 	draw_minimap(mlx, game);
 	draw_minimap_player(mlx, game);
 	mlx->game = game;
+
 	setup_hooks(mlx);
 	mlx_loop(mlx->mlx_pointer);
 }
@@ -214,13 +234,13 @@ int	main(int ac, char **av)
 		err("Failed to parse map."), exit(0);
 	if (!good_input(&game))
 	{
-		propper_exit(&game);
+		free_program(&game);
 		exit(1);
 	}
 	player = init_player('N', &game);
 	mlx.player = player;
 	start_game(&mlx, &game);
-	propper_exit(&game);
+	propper_exit(&mlx);
 	return (0);
 }
 
@@ -241,6 +261,8 @@ int	good_input(t_game *game)
 	if (has_bad_char(game->map))
 		return (err("Unrecognized charactr"), 0);
 	get_map_dimensions(game->map, &game->width, &game->height);
+	if (game->height > 100 || game->width > 200)
+		return(err("Map too big"), 0);
 	game->map_2d = convert_map(game);
 	if (!game->map_2d)
 		return (err("Failed to convert map"), 0);

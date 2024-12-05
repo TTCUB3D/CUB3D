@@ -3,41 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   freeing1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:23:00 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/03 14:08:06 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/05 16:09:23 by tlupu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// static void free_resources(t_game *game)
-// {
-// 	size_t	i;
+static void free_resources(t_mlx *mlx)
+{
+	size_t	i;
 
-// 	i = 0;
-// 	while (i < 5)
-// 	{
-// 		if (game->img[i])
-// 		{
-// 			mlx_destroy_image(game->mlx, game->img[i]);
-// 			game->img[i] = NULL;
-// 		}
-// 	}
-// 	if (game->win)
-// 	{
-// 		mlx_clear_window(game->mlx, game->win);
-// 		mlx_destroy_window(game->mlx, game->win);
-// 	}
-// 	if (game->mlx)
-// 	{
-// 		mlx_destroy_display(game->mlx);
-// 		mlx_loop_end(game->mlx);
-// 		free(game->mlx);
-// 		game->mlx = NULL;
-// 	}
-// }
+	i = 0;
+	while (i < 5)
+	{
+		if (mlx->img[i])
+		{
+			mlx_destroy_image(mlx, mlx->img[i]);
+			mlx->img[i] = NULL;
+		}
+	}
+	if (mlx)
+	{
+		mlx_clear_window(mlx, mlx->window);
+		mlx_destroy_window(mlx, mlx->window);
+	}
+	if (mlx)
+	{
+		mlx_destroy_display(mlx->mlx_pointer);
+		mlx_loop_end(mlx->mlx_pointer);
+		free(mlx->mlx_pointer);
+		mlx->mlx_pointer = NULL;
+	}
+}
 
 void	free_program(t_game *game)
 {
@@ -58,10 +58,10 @@ void	free_program(t_game *game)
 	}
 }
 
-int	propper_exit(t_game *game)
-{
-	// free_resources(game);
-	free_program(game);
+int	propper_exit(t_mlx *mlx)
+{	
+	free_resources(mlx);
+	free_program(mlx->game);
 	return (0);
 }
 

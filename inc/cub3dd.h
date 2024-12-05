@@ -44,6 +44,7 @@ typedef struct s_mlx
 	void	*window;
 	void	*mlx_pointer;
 	void	*img[4];
+	bool	facts;
 	t_player *player; // pointer to players struct
 	t_game	*game;
 }			t_mlx;

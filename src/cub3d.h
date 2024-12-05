@@ -6,7 +6,7 @@
 /*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 10:40:49 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/04 18:52:21 by tlupu            ###   ########.fr       */
+/*   Updated: 2024/12/05 16:12:59 by tlupu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,12 +118,12 @@ void				eliminate_spaces(t_textures *textures);
 void				rmv_space_in_str(char **str);
 int					is_empty_line(char *line);
 // HOOKS
-int					close_on_button(t_game *game);
+int					close_on_button(t_mlx *mlx);
 int					key_hook(int keycode, t_mlx *game);
 void				setup_hooks(t_mlx *mlx);
 // FREEING
 void				free_list(t_map *head);
-int					propper_exit(t_game *game);
+int					propper_exit(t_mlx *mlx);
 void				free_2d_map(t_game *game);
 void				free_textures(t_textures *textures);
 void				free_matrix(char **matrix);
