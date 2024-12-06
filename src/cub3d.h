@@ -6,7 +6,7 @@
 /*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 10:40:49 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/05 16:12:59 by tlupu            ###   ########.fr       */
+/*   Updated: 2024/12/06 15:12:37 by tlupu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,12 @@
 # define RIGHT_KEY 65363
 # define RED "\033[31m"
 # define RESET "\033[0m"
+#define GRID_CLOLUR 0x000000
+#define MINI_P_TILE 10
+#define PLAYER_COLOR 0xFF0000
+#define PI 3.14159265
+#define FOV 60
+
 
 # define TEXTURE_NO "./inc/NO.xpm"
 # define TEXTURE_SO "./inc/SO.xpm"
@@ -74,6 +80,7 @@ typedef struct s_game
 
 
 
+void	mlx_put_pixe(char *buff_data, int x, int y, int color, int size_line, int bpp);
 
 
 // INIT
@@ -120,7 +127,7 @@ int					is_empty_line(char *line);
 // HOOKS
 int					close_on_button(t_mlx *mlx);
 int					key_hook(int keycode, t_mlx *game);
-void				setup_hooks(t_mlx *mlx);
+int				setup_hooks(t_mlx *mlx);
 // FREEING
 void				free_list(t_map *head);
 int					propper_exit(t_mlx *mlx);

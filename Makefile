@@ -6,7 +6,7 @@
 #    By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/15 10:51:39 by tursescu          #+#    #+#              #
-#    Updated: 2024/12/04 18:15:10 by tlupu            ###   ########.fr        #
+#    Updated: 2024/12/06 20:11:54 by tlupu            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ RM = rm -f
 LIBFT_DIR = dirs/libft
 MLX_DIR = dirs/mlx
 CFLAGS = -g -Wall -Wextra -Werror -Iinclude/mlx
-MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11
+MLX_FLAGS = -Lmlx -lmlx -L/usr/lib/X11 -lXext -lX11 -lm
 LIBS = $(LIBFT_DIR)/libft.a $(MLX_DIR)/libmlx.a
 OBJ = $(SRC:.c=.o)
 NAME = cub3D

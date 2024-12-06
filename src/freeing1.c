@@ -6,7 +6,7 @@
 /*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:23:00 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/05 16:09:23 by tlupu            ###   ########.fr       */
+/*   Updated: 2024/12/05 17:46:01 by tlupu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void free_resources(t_mlx *mlx)
 			mlx_destroy_image(mlx, mlx->img[i]);
 			mlx->img[i] = NULL;
 		}
+		i++;
 	}
 	if (mlx)
 	{

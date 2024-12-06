@@ -1,12 +1,5 @@
 #include "cub3d.h"
 
-
-#define GRID_CLOLUR 0x000000
-#define MINI_P_TILE 10
-#define PLAYER_COLOR 0xFF0000
-#define PI 3.14159265
-#define FOV 60
-
 void	init_angle(t_player *player)
 {
 	if (player->direction == 'N')
@@ -108,86 +101,121 @@ t_player	*init_player(char direction, t_game *game)
 	return (player);
 }
 
+void	mlx_put_pixe(char *buff_data, int x, int y, int color, int size_line, int bpp)
+{
+    int pixel_index = (y * size_line) + (x * (bpp / 8));
+    *(unsigned int *)(buff_data + pixel_index) = color;
+}
+
 void	draw_minimap(t_mlx *mlx, t_game *game)
 {
-	size_t	i;
-	size_t	j;
-	mlx->facts = false;
+    size_t	i;
+    size_t	j;
+    void	*buffer;
+    int		bpp;
+    int		size_line;
+    int		endian;
+    char	*buff_data;
 
-	mlx_clear_window(mlx->mlx_pointer, mlx->window);
-	i = 0;
-	while (i < game->height)
+    // Create an off-screen image (buffer)
+    buffer = mlx_new_image(mlx->mlx_pointer, game->width * MINI_TILE_SIZE, game->height * MINI_TILE_SIZE);
+    buff_data = mlx_get_data_addr(buffer, &bpp, &size_line, &endian);
+
+    i = 0;
+    while (i < game->height)
+    {
+        j = 0;
+        while (j < game->width)
+        {
+            if (game->map_2d[i][j] && game->map_2d[i][j] == '1')
+            {
+                // Draw wall tile to the buffer
+                for (int y = 0; y < MINI_TILE_SIZE; y++)
+                {
+                    for (int x = 0; x < MINI_TILE_SIZE; x++)
+                    {
+                        mlx_put_pixe(buff_data, j * MINI_TILE_SIZE + x, i * MINI_TILE_SIZE + y, 0x0000FF, size_line, bpp); // White color for walls
+                    }
+                }
+            }
+            else if ((game->map_2d[i][j]) && (game->map_2d[i][j] == '0'
+                    || game->map_2d[i][j] == 'N' || game->map_2d[i][j] == 'W'
+                    || game->map_2d[i][j] == 'E' || game->map_2d[i][j] == 'S'))
+            {
+                // Draw floor tile to the buffer
+                for (int y = 0; y < MINI_TILE_SIZE; y++)
+                {
+                    for (int x = 0; x < MINI_TILE_SIZE; x++)
+                    {
+                        mlx_put_pixe(buff_data, j * MINI_TILE_SIZE + x, i * MINI_TILE_SIZE + y, 0xADD8E6, size_line, bpp); // Black color for floors
+                    }
+                }
+                // Draw grid lines to the buffer
+                for (int x = 0; x < MINI_TILE_SIZE; x++)
+                {
+                    mlx_put_pixe(buff_data, j * MINI_TILE_SIZE + x, i * MINI_TILE_SIZE, GRID_CLOLUR, size_line, bpp);
+                    mlx_put_pixe(buff_data, j * MINI_TILE_SIZE + x, (i + 1) * MINI_TILE_SIZE - 1, GRID_CLOLUR, size_line, bpp);
+                }
+                for (int y = 0; y < MINI_TILE_SIZE; y++)
+                {
+                    mlx_put_pixe(buff_data, j * MINI_TILE_SIZE, i * MINI_TILE_SIZE + y, GRID_CLOLUR, size_line, bpp);
+                    mlx_put_pixe(buff_data, (j + 1) * MINI_TILE_SIZE - 1, i * MINI_TILE_SIZE + y, GRID_CLOLUR, size_line, bpp);
+                }
+            }
+            j++;
+        }
+        i++;
+    }
+    mlx_put_image_to_window(mlx->mlx_pointer, mlx->window, buffer, 0, 0);
+    mlx_destroy_image(mlx->mlx_pointer, buffer);
+}
+
+
+void draw_mini_rays(t_mlx *mlx)
+{
+	int	player_x;
+	int	player_y;
+	float step_x;
+	float step_y;
+
+
+	player_x = mlx->player->player_x * MINI_TILE_SIZE;
+	player_y = mlx->player->player_y * MINI_TILE_SIZE;
+	for (int  i = 0; i < mlx->player->fov; i++)
 	{
-		j = 0;
-		while (j < game->width)
+		mlx->player->player_angle = i * mlx->player->player_angle;
+		mlx->player->mini_ray_x = player_x;
+		mlx->player->mini_ray_y = player_y;
+		step_x = cos(mlx->player->player_angle);
+		step_y = sin(mlx->player->player_angle);
+		while (1)
 		{
-			if (game->map_2d[i][j] && game->map_2d[i][j] == '1')
-			{
-				mlx_put_image_to_window(mlx->mlx_pointer, mlx->window,
-					mlx->background_img, j * MINI_TILE_SIZE, i
-					* MINI_TILE_SIZE);
-			}
-			else if ((game->map_2d[i][j]) && (game->map_2d[i][j] == '0'
-					|| game->map_2d[i][j] == 'N' || game->map_2d[i][j] == 'W'
-					|| game->map_2d[i][j] == 'E' || game->map_2d[i][j] == 'S'))
-			{
-				mlx_put_image_to_window(mlx->mlx_pointer, mlx->window,
-					mlx->minifloor_img, j * MINI_TILE_SIZE, i * MINI_TILE_SIZE);
-				// if (!mlx->facts)
-				// {
-				for (int x = 0; x < MINI_TILE_SIZE; x++)
-				{
-					mlx_pixel_put(mlx->mlx_pointer, mlx->window, (j * MINI_TILE_SIZE) + x, (i * MINI_TILE_SIZE), GRID_CLOLUR);
-					mlx_pixel_put(mlx->mlx_pointer, mlx->window, (j * MINI_TILE_SIZE) +  x, (i + 1) * MINI_TILE_SIZE - 1, GRID_CLOLUR);
-				}
-				for (int y = 0; y < MINI_TILE_SIZE; y++)
-				{
-					mlx_pixel_put(mlx->mlx_pointer, mlx->window, (j * MINI_TILE_SIZE), (i * MINI_TILE_SIZE) + y, GRID_CLOLUR);
-					mlx_pixel_put(mlx->mlx_pointer, mlx->window, (j + 1) *  MINI_TILE_SIZE -1 , i  * MINI_TILE_SIZE + y, GRID_CLOLUR);
-				}
-				// mlx->facts = true;
-					
-				// }
-				
-			}
-			j++;
+			mlx_pixel_put(mlx->mlx_pointer, mlx->window, (int)mlx->player->mini_ray_x, (int)mlx->player->mini_ray_y, 0x000000);
+			mlx->player->mini_ray_x += step_x;
+			mlx->player->mini_ray_y += step_y;
 		}
-		i++;
 	}
 }
 
-void	draw_minimap_player(t_mlx *mlx, t_game *game)
+int	draw_minimap_player(t_mlx *mlx, t_game *game)
 {
-	size_t	i;
-	size_t	j;
-	size_t	x;
-	size_t	y;
+	int	player_x;
+	int	player_y;
 
-	i = 0;
-	j = 0;
-	while (i < game->height)
+	player_x = mlx->player->player_x * MINI_TILE_SIZE;
+	player_y = mlx->player->player_y * MINI_TILE_SIZE;
+	(void)game;
+	// Draw the player as a small square or a different color pixel
+	for (int y = 0; y < MINI_P_TILE; y++)
 	{
-		j = 0;
-		while (j < game->width)
+		for (int x = 0; x < MINI_P_TILE; x++)
 		{
-			if (game->map_2d[i][j] == 'N' || game->map_2d[i][j] == 'W'
-				|| game->map_2d[i][j] == 'E' || game->map_2d[i][j] == 'S')
-			{
-				x = j * MINI_TILE_SIZE;
-				y = i * MINI_TILE_SIZE;
-				for (int dy = 0; dy < MINI_P_TILE; dy++)
-				{
-					for (int dx = 0; dx < MINI_P_TILE; dx++)
-					{
-						mlx_pixel_put(mlx->mlx_pointer, mlx->window, mlx->player->player_x + dx, mlx->player->player_y
-							+ dy, PLAYER_COLOR);
-					}
-				}
-			}
-			j++;
+			mlx_pixel_put(mlx->mlx_pointer, mlx->window, player_x + x, player_y
+				+ y, PLAYER_COLOR);
 		}
-		i++;
 	}
+	// draw_mini_rays(mlx);
+	return (0);
 }
 
 void	start_game(t_mlx *mlx, t_game *game)
@@ -214,11 +242,10 @@ void	start_game(t_mlx *mlx, t_game *game)
 	draw_minimap(mlx, game);
 	draw_minimap_player(mlx, game);
 	mlx->game = game;
-
 	setup_hooks(mlx);
 	mlx_loop(mlx->mlx_pointer);
 }
-//MAIN
+// MAIN
 
 int	main(int ac, char **av)
 {
@@ -262,7 +289,7 @@ int	good_input(t_game *game)
 		return (err("Unrecognized charactr"), 0);
 	get_map_dimensions(game->map, &game->width, &game->height);
 	if (game->height > 100 || game->width > 200)
-		return(err("Map too big"), 0);
+		return (err("Map too big"), 0);
 	game->map_2d = convert_map(game);
 	if (!game->map_2d)
 		return (err("Failed to convert map"), 0);
