@@ -171,28 +171,41 @@ void	draw_minimap(t_mlx *mlx, t_game *game)
 }
 
 
-void draw_mini_rays(t_mlx *mlx)
+void draw_mini_rays(t_mlx *mlx, t_game *game)
 {
 	int	player_x;
 	int	player_y;
 	float step_x;
 	float step_y;
+	float ray_angle;
+	size_t map_x;
+	size_t map_y;
 
 
 	player_x = mlx->player->player_x * MINI_TILE_SIZE;
 	player_y = mlx->player->player_y * MINI_TILE_SIZE;
-	for (int  i = 0; i < mlx->player->fov; i++)
+	for (int  i = -30; i < mlx->player->fov/2; i++)
 	{
-		mlx->player->player_angle = i * mlx->player->player_angle;
+		ray_angle = mlx->player->player_angle  + (i * (PI/180));
 		mlx->player->mini_ray_x = player_x;
 		mlx->player->mini_ray_y = player_y;
-		step_x = cos(mlx->player->player_angle);
-		step_y = sin(mlx->player->player_angle);
+		step_x = cos(ray_angle) * 0.1;
+		step_y = sin(ray_angle) * 0.1;
 		while (1)
 		{
-			mlx_pixel_put(mlx->mlx_pointer, mlx->window, (int)mlx->player->mini_ray_x, (int)mlx->player->mini_ray_y, 0x000000);
+			map_x = (int)(mlx->player->mini_ray_x/MINI_TILE_SIZE);
+			map_y = (int)(mlx->player->mini_ray_y/MINI_TILE_SIZE);
+			if (map_x >= 0 && map_x < game->width && map_y >= 0 && map_y < game->height && game->map_2d[map_y][map_x] == '1')
+			{
+				break;
+			}
+			mlx_pixel_put(mlx->mlx_pointer, mlx->window, (int)mlx->player->mini_ray_x, (int)mlx->player->mini_ray_y , 0xFF0000);
 			mlx->player->mini_ray_x += step_x;
 			mlx->player->mini_ray_y += step_y;
+			if (mlx->player->mini_ray_x < 0 || mlx->player->mini_ray_x >= game->width * MINI_TILE_SIZE || mlx->player->mini_ray_y < 0 || mlx->player->mini_ray_y >= game->height * MINI_TILE_SIZE)
+            {
+                break;
+            }
 		}
 	}
 }
@@ -206,15 +219,15 @@ int	draw_minimap_player(t_mlx *mlx, t_game *game)
 	player_y = mlx->player->player_y * MINI_TILE_SIZE;
 	(void)game;
 	// Draw the player as a small square or a different color pixel
-	for (int y = 0; y < MINI_P_TILE; y++)
+	for (int y = 0; y < 1; y++)
 	{
-		for (int x = 0; x < MINI_P_TILE; x++)
+		for (int x = 0; x < 1; x++)
 		{
 			mlx_pixel_put(mlx->mlx_pointer, mlx->window, player_x + x, player_y
 				+ y, PLAYER_COLOR);
 		}
 	}
-	// draw_mini_rays(mlx);
+	draw_mini_rays(mlx, game);
 	return (0);
 }
 
