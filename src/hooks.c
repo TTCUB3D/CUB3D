@@ -3,6 +3,7 @@
 int	close_on_button(t_mlx *mlx)
 {
 	printf("Game over !\n");
+	free(mlx->key_states);
 	propper_exit(mlx);
 	return (0);
 }
@@ -26,30 +27,36 @@ void	move_player(t_mlx *mlx, t_game *game, t_player *player, float dx,
 	}
 }
 
-int	key_hook(int keycode, t_mlx *mlx)
+int	key_press(int keycode, t_mlx *mlx)
 {
-	if (keycode == ESC_KEY)
+	if (keycode >= 0 && keycode < MAX_KEY_CODE)
+		mlx->key_states[keycode] = true;
+	return (0);
+}
+
+int key_release(int keycode, t_mlx *mlx)
+{
+	if (keycode >= 0 && keycode < MAX_KEY_CODE)
+		mlx->key_states[keycode] = false;
+	return (0);
+}
+
+void	process_keys(t_mlx *mlx)
+{
+	if (mlx->key_states[ESC_KEY])
 	{
 		printf("Game over!\n");
 		propper_exit(mlx);
 	}
-	if (keycode == D_KEY)
-	{
+	if (mlx->key_states[D_KEY])
 		move_player(mlx, mlx->game, mlx->player, 0, -0.1);
-	}
-	if (keycode == A_KEY)
-	{
+	if (mlx->key_states[A_KEY])
 		move_player(mlx, mlx->game, mlx->player, 0, 0.1);
-	}
-	if (keycode == S_KEY)
-	{
+	if (mlx->key_states[S_KEY])
 		move_player(mlx, mlx->game, mlx->player, -0.1, 0);
-	}
-	if (keycode == W_KEY)
-	{
+	if (mlx->key_states[W_KEY])
 		move_player(mlx, mlx->game, mlx->player, 0.1, 0);
-	}
-	if (keycode == LEFT_KEY)
+	if (mlx->key_states[LEFT_KEY])
 	{
 		mlx->player->player_angle -= 0.1;
 		if(mlx->player->player_angle < 0)
@@ -57,7 +64,7 @@ int	key_hook(int keycode, t_mlx *mlx)
 		draw_minimap(mlx,mlx->game);
 		draw_minimap_player(mlx,mlx->game);
 	}
-	if (keycode == RIGHT_KEY)
+	if (mlx->key_states[RIGHT_KEY])
 	{
 		mlx->player->player_angle += 0.1;
 		if(mlx->player->player_angle >= 2 * PI)
@@ -65,6 +72,11 @@ int	key_hook(int keycode, t_mlx *mlx)
 		draw_minimap(mlx,mlx->game);
 		draw_minimap_player(mlx,mlx->game);
 	}
+}
+
+int	game_loop(t_mlx *mlx)
+{
+	process_keys(mlx);
 	return (0);
 }
 
@@ -75,8 +87,9 @@ int	setup_hooks(t_mlx *mlx)
 		printf("Error: mlx or window not initialized\n");
 		return (1);
 	}
-	mlx_hook(mlx->window, 2, 1L << 0, key_hook, mlx);
-	// mlx_loop_hook(mlx->mlx_pointer, draw_minimap_player, mlx);
+	mlx_hook(mlx->window, 2, 1L << 0, key_press, mlx);
+	mlx_hook(mlx->window, 3, 1L << 1, key_release, mlx);
 	mlx_hook(mlx->window, 17, 0L, close_on_button, mlx);
+	mlx_loop_hook(mlx->mlx_pointer, game_loop, mlx);
 	return (0);
 }

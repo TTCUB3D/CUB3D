@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freeing1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:23:00 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/05 17:46:01 by tlupu            ###   ########.fr       */
+/*   Updated: 2024/12/10 16:18:35 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ static void free_resources(t_mlx *mlx)
 		}
 		i++;
 	}
-	if (mlx)
+	if (mlx->window)
 	{
 		mlx_clear_window(mlx, mlx->window);
 		mlx_destroy_window(mlx, mlx->window);
 	}
-	if (mlx)
+	if (mlx->mlx_pointer)
 	{
 		mlx_destroy_display(mlx->mlx_pointer);
 		mlx_loop_end(mlx->mlx_pointer);
@@ -57,6 +57,7 @@ void	free_program(t_game *game)
 		free_textures(game->textures);
 		game->textures = NULL;
 	}
+	exit(0);
 }
 
 int	propper_exit(t_mlx *mlx)

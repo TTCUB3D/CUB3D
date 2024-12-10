@@ -84,7 +84,7 @@ void	init_x_y(t_player *player, t_game *game)
 	player->player_y = get_player_y_position(game) + 0.003f;
 	player->fov = FOV;
 }
-t_player	*init_player(char direction, t_game *game)
+t_player	*init_player(t_game *game)
 {
 	t_player	*player;
 
@@ -94,7 +94,8 @@ t_player	*init_player(char direction, t_game *game)
 		free(player);
 		return (NULL);
 	}
-	player->direction = direction;
+	player->direction = player_is_char(game);
+	printf("player :%c\n", player->direction);
 	init_angle(player);
 	init_x_y(player, game);
 	// init_coordinates(player);
@@ -273,11 +274,9 @@ int	main(int ac, char **av)
 	if (!game.map)
 		err("Failed to parse map."), exit(0);
 	if (!good_input(&game))
-	{
 		free_program(&game);
-		exit(1);
-	}
-	player = init_player('N', &game);
+	init_key_states(&mlx.key_states);
+	player = init_player(&game);
 	mlx.player = player;
 	start_game(&mlx, &game);
 	propper_exit(&mlx);
@@ -286,9 +285,8 @@ int	main(int ac, char **av)
 
 int	good_input(t_game *game)
 {
-	game->textures = malloc(sizeof(t_textures));
-	if (!game->textures)
-		return (err("Memory error for textures!"), 0);
+	// if (!game->textures)
+	// 	return (err("Memory error for textures!"), 0);
 	if (!parse_textures_colors(&(game->map), game->textures))
 		return (0);
 	eliminate_spaces(game->textures);

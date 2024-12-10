@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 14:01:04 by tursescu          #+#    #+#             */
-/*   Updated: 2024/11/21 19:35:44 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:33:19 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	is_player(char c)
 		return (1);
 	return (0);
 }
+
 
 int player_found(t_map *head)
 {
