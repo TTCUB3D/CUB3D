@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:23:00 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/10 16:18:35 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/11 14:37:24 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,25 @@
 
 static void free_resources(t_mlx *mlx)
 {
-	size_t	i;
+	// size_t	i;
 
-	i = 0;
-	while (i < 5)
-	{
-		if (mlx->img[i])
-		{
-			mlx_destroy_image(mlx, mlx->img[i]);
-			mlx->img[i] = NULL;
-		}
-		i++;
-	}
+	// i = 0;
+	// while (i < 5)
+	// {
+	// 	if (mlx->img[i])
+	// 	{
+	// 		mlx_destroy_image(mlx, mlx->img[i]);
+	// 		mlx->img[i] = NULL;
+	// 	}
+	// 	i++;
+	// }
+	mlx_destroy_image(mlx->mlx_pointer, mlx->background_img);
+	mlx_destroy_image(mlx->mlx_pointer, mlx->minifloor_img);
+	mlx_destroy_image(mlx->mlx_pointer, mlx->miniplayer_img);
 	if (mlx->window)
 	{
-		mlx_clear_window(mlx, mlx->window);
-		mlx_destroy_window(mlx, mlx->window);
+		mlx_clear_window(mlx->mlx_pointer, mlx->window);
+		mlx_destroy_window(mlx->mlx_pointer, mlx->window);
 	}
 	if (mlx->mlx_pointer)
 	{
@@ -38,6 +41,13 @@ static void free_resources(t_mlx *mlx)
 		free(mlx->mlx_pointer);
 		mlx->mlx_pointer = NULL;
 	}
+	if (mlx->key_states)
+	{
+		free(mlx->key_states);
+		mlx->key_states = NULL;
+	}
+	if (mlx->player)
+		free(mlx->player);
 }
 
 void	free_program(t_game *game)
@@ -61,7 +71,8 @@ void	free_program(t_game *game)
 }
 
 int	propper_exit(t_mlx *mlx)
-{	
+{
+	printf("GAME OVER!\n");
 	free_resources(mlx);
 	free_program(mlx->game);
 	return (0);

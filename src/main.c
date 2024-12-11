@@ -95,7 +95,6 @@ t_player	*init_player(t_game *game)
 		return (NULL);
 	}
 	player->direction = player_is_char(game);
-	printf("player :%c\n", player->direction);
 	init_angle(player);
 	init_x_y(player, game);
 	// init_coordinates(player);
@@ -285,8 +284,6 @@ int	main(int ac, char **av)
 
 int	good_input(t_game *game)
 {
-	// if (!game->textures)
-	// 	return (err("Memory error for textures!"), 0);
 	if (!parse_textures_colors(&(game->map), game->textures))
 		return (0);
 	eliminate_spaces(game->textures);

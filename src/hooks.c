@@ -2,7 +2,6 @@
 
 int	close_on_button(t_mlx *mlx)
 {
-	printf("Game over !\n");
 	free(mlx->key_states);
 	propper_exit(mlx);
 	return (0);
@@ -44,10 +43,7 @@ int key_release(int keycode, t_mlx *mlx)
 void	process_keys(t_mlx *mlx)
 {
 	if (mlx->key_states[ESC_KEY])
-	{
-		printf("Game over!\n");
 		propper_exit(mlx);
-	}
 	if (mlx->key_states[D_KEY])
 		move_player(mlx, mlx->game, mlx->player, 0, -0.1);
 	if (mlx->key_states[A_KEY])
