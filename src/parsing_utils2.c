@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 19:09:20 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/03 11:38:13 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/10 16:37:07 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,24 @@ int	is_empty_line(char *line)
 		line++;
 	}
 	return (1);
+}
+
+char	player_is_char(t_game *game)
+{
+	int		i;
+	int		j;
+
+	i = 0;
+	while (game->map_2d[i])
+	{
+		j = 0;
+		while (game->map_2d[i][j])
+		{
+			if (is_player(game->map_2d[i][j]))
+				return (game->map_2d[i][j]);
+			j++;
+		}
+		i++;
+	}
+	return ('X');
 }

@@ -6,7 +6,7 @@
 /*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 10:40:49 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/11 20:12:09 by tlupu            ###   ########.fr       */
+/*   Updated: 2024/12/11 20:31:45 by tlupu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 # define D_KEY 100
 # define LEFT_KEY 65361
 # define RIGHT_KEY 65363
+# define MAX_KEY_CODE 65364
 # define RED "\033[31m"
 # define RESET "\033[0m"
 # define GRID_CLOLUR 0x000000
@@ -103,8 +104,8 @@ void mlx_put_pixel(char *buff_data, int x, int y, int color, int size_line, int 
 
 void				start_rays(t_mlx *mlx, t_game *game);
 // INIT
-void				init_textures_null(t_textures *textures);
 void				init_game(t_game *game);
+void				init_key_states(bool **key_states);
 void				textrue_init(t_game *game, t_textures *textures);
 void				window_init(t_game *game);
 // RENDERING
@@ -143,10 +144,15 @@ char				**convert_map(t_game *game);
 void				eliminate_spaces(t_textures *textures);
 void				rmv_space_in_str(char **str);
 int					is_empty_line(char *line);
+char				player_is_char(t_game *game);
 // HOOKS
 int					close_on_button(t_mlx *mlx);
-int					key_hook(int keycode, t_mlx *game);
+void				process_keys(t_mlx *mlx);
 int					setup_hooks(t_mlx *mlx);
+
+int					key_press(int keycode, t_mlx *mlx);
+int 				key_release(int keycode, t_mlx *mlx);
+int					game_loop(t_mlx *mlx);
 // FREEING
 void				free_list(t_map *head);
 int					propper_exit(t_mlx *mlx);

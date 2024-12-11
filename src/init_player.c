@@ -110,7 +110,7 @@ void	init_x_y(t_player *player, t_game *game)
 	game->prev_frame_time = 0;
 	game->collision = false;
 }
-t_player	*init_player(char direction, t_game *game)
+t_player	*init_player(t_game *game)
 {
 	t_player	*player;
 
@@ -120,7 +120,7 @@ t_player	*init_player(char direction, t_game *game)
 		free(player);
 		return (NULL);
 	}
-	player->direction = direction;
+	player->direction = player_is_char(game);
 	init_angle(player, game);
 	init_x_y(player, game);
 	// init_coordinates(player);

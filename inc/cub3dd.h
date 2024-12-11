@@ -55,12 +55,12 @@ typedef struct s_mlx
 	bool					first_move;
 	t_player *player; // pointer to players struct
 	t_game					*game;
-	
+	bool					*key_states;
 }							t_mlx;
 
-t_player					*init_player(char direction, t_game *game);
+t_player					*init_player(t_game *game);
 void						draw_minimap(t_mlx *mlx, t_game *game);
 int							draw_minimap_player(t_mlx *mlx, t_game *game);
 void						init_x_y(t_player *player, t_game *game);
 
-#endif
+# endif

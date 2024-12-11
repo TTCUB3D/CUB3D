@@ -6,7 +6,7 @@
 /*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:23:00 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/11 14:14:51 by tlupu            ###   ########.fr       */
+/*   Updated: 2024/12/11 20:23:04 by tlupu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,40 @@
 
 static void free_resources(t_mlx *mlx)
 {
-	size_t	i;
+	// size_t	i;
 
-	i = 0;
-	while (i < 5)
+	// i = 0;
+	// while (i < 5)
+	// {
+	// 	if (mlx->img[i])
+	// 	{
+	// 		mlx_destroy_image(mlx, mlx->img[i]);
+	// 		mlx->img[i] = NULL;
+	// 	}
+	// 	i++;
+	// }
+	mlx_destroy_image(mlx->mlx_pointer, mlx->background_img);
+	mlx_destroy_image(mlx->mlx_pointer, mlx->minifloor_img);
+	mlx_destroy_image(mlx->mlx_pointer, mlx->miniplayer_img);
+	if (mlx->window)
 	{
-		if (mlx->img[i])
-		{
-			mlx_destroy_image(mlx, mlx->img[i]);
-			mlx->img[i] = NULL;
-		}
-		i++;
+		mlx_clear_window(mlx->mlx_pointer, mlx->window);
+		mlx_destroy_window(mlx->mlx_pointer, mlx->window);
 	}
-	if (mlx)
-	{
-		mlx_clear_window(mlx, mlx->window);
-		mlx_destroy_window(mlx, mlx->window);
-	}
-	if (mlx)
+	if (mlx->mlx_pointer)
 	{
 		mlx_destroy_display(mlx->mlx_pointer);
 		mlx_loop_end(mlx->mlx_pointer);
 		free(mlx->mlx_pointer);
 		mlx->mlx_pointer = NULL;
 	}
+	if (mlx->key_states)
+	{
+		free(mlx->key_states);
+		mlx->key_states = NULL;
+	}
+	if (mlx->player)
+		free(mlx->player);
 }
 
 void	free_program(t_game *game)
@@ -57,10 +67,12 @@ void	free_program(t_game *game)
 		// free_textures(game->textures);
 		game->textures = NULL;
 	}
+	exit(0);
 }
 
 int	propper_exit(t_mlx *mlx)
-{	
+{
+	printf("GAME OVER!\n");
 	free_resources(mlx);
 	free_program(mlx->game);
 	return (0);

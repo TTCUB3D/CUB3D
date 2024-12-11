@@ -43,11 +43,9 @@ int	main(int ac, char **av)
 	if (!game.map)
 		err("Failed to parse map."), exit(0);
 	if (!good_input(&game))
-	{
 		free_program(&game);
-		exit(1);
-	}
-	player = init_player('N', &game);
+	init_key_states(&mlx.key_states);
+	player = init_player(&game);
 	mlx.player = player;
 	start_game(&mlx, &game);
 	propper_exit(&mlx);
@@ -56,9 +54,6 @@ int	main(int ac, char **av)
 
 int	good_input(t_game *game)
 {
-	game->textures = malloc(sizeof(t_textures));
-	if (!game->textures)
-		return (err("Memory error for textures!"), 0);
 	if (!parse_textures_colors(&(game->map), game->textures))
 		return (0);
 	eliminate_spaces(game->textures);
