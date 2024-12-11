@@ -6,7 +6,7 @@
 /*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 10:40:49 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/06 15:12:37 by tlupu            ###   ########.fr       */
+/*   Updated: 2024/12/11 20:12:09 by tlupu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 
 # define TILE_SIZE 120
 # define MINI_TILE_SIZE 30
+# define S_WIDTH 1600 // Define screen width
+# define S_HEIGHT 900
 
 # define ESC_KEY 65307
 # define W_KEY 119
@@ -38,12 +40,11 @@
 # define RIGHT_KEY 65363
 # define RED "\033[31m"
 # define RESET "\033[0m"
-#define GRID_CLOLUR 0x000000
-#define MINI_P_TILE 10
-#define PLAYER_COLOR 0xFF0000
-#define PI 3.14159265
-#define FOV 60
-
+# define GRID_CLOLUR 0x000000
+# define MINI_P_TILE 10
+# define PLAYER_COLOR 0xFF0000
+# define PI 3.14159265
+# define FOV 60
 
 # define TEXTURE_NO "./inc/NO.xpm"
 # define TEXTURE_SO "./inc/SO.xpm"
@@ -68,6 +69,26 @@ typedef struct s_textures
 
 typedef struct s_game
 {
+	int				side;
+	size_t			map_x;
+	size_t			map_y;
+	float			stepx;
+	float			stepy;
+	float			first_ray_dist_x;
+	float			first_ray_dist_y;
+	float			delta_ray_dist_x;
+	float			delta_ray_dist_y;
+	float			ray_wall_length;
+	bool			collision;
+	float			camera_x;
+	float			direct_x;
+	float			direct_y;
+	float			raydirect_x;
+	float			raydirect_y;
+	float			plan_x;
+	float			plan_y;
+	float			curr_frame_time;
+	float			prev_frame_time;
 	t_map			*map;
 	char			**map_2d;
 	size_t			width;
@@ -77,12 +98,10 @@ typedef struct s_game
 	t_player		*player;
 }					t_game;
 
+void mlx_put_pixel(char *buff_data, int x, int y, int color, int size_line, int bpp);
 
 
-
-void	mlx_put_pixe(char *buff_data, int x, int y, int color, int size_line, int bpp);
-
-
+void				start_rays(t_mlx *mlx, t_game *game);
 // INIT
 void				init_textures_null(t_textures *textures);
 void				init_game(t_game *game);
@@ -127,7 +146,7 @@ int					is_empty_line(char *line);
 // HOOKS
 int					close_on_button(t_mlx *mlx);
 int					key_hook(int keycode, t_mlx *game);
-int				setup_hooks(t_mlx *mlx);
+int					setup_hooks(t_mlx *mlx);
 // FREEING
 void				free_list(t_map *head);
 int					propper_exit(t_mlx *mlx);

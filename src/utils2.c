@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 11:56:25 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/03 11:40:51 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/11 14:18:45 by tlupu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ char	**convert_map(t_game *game)
 	i = 0;
 	while (temp)
 	{
+		// printf("here\n");
 		if (!temp->line)
 			return (err("Invalid map line!"), NULL);
 		map_2d[i] = malloc((game->width + 1) * sizeof(char));

@@ -6,7 +6,7 @@
 /*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:23:00 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/05 17:46:01 by tlupu            ###   ########.fr       */
+/*   Updated: 2024/12/11 14:14:51 by tlupu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	free_program(t_game *game)
 	}
 	if (game->textures)
 	{
-		free_textures(game->textures);
+		// free_textures(game->textures);
 		game->textures = NULL;
 	}
 }

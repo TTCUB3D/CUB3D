@@ -55,6 +55,7 @@ typedef struct s_mlx
 	bool					first_move;
 	t_player *player; // pointer to players struct
 	t_game					*game;
+	
 }							t_mlx;
 
 t_player					*init_player(char direction, t_game *game);

@@ -21,8 +21,8 @@ void	move_player(t_mlx *mlx, t_game *game, t_player *player, float dx,
 		player->player_x = new_x;
 		player->player_y = new_y;
 		mlx->player = player;
-		draw_minimap(mlx, game);
-		draw_minimap_player(mlx, game);
+		// draw_minimap(mlx, game);
+		// draw_minimap_player(mlx, game);
 	}
 }
 
@@ -35,36 +35,37 @@ int	key_hook(int keycode, t_mlx *mlx)
 	}
 	if (keycode == D_KEY)
 	{
-		move_player(mlx, mlx->game, mlx->player, 0, -0.1);
+		move_player(mlx, mlx->game, mlx->player, 0, -0.2);
 	}
 	if (keycode == A_KEY)
 	{
-		move_player(mlx, mlx->game, mlx->player, 0, 0.1);
+		move_player(mlx, mlx->game, mlx->player, 0, 0.2);
 	}
 	if (keycode == S_KEY)
 	{
-		move_player(mlx, mlx->game, mlx->player, -0.1, 0);
+		move_player(mlx, mlx->game, mlx->player, -0.2, 0);
 	}
 	if (keycode == W_KEY)
 	{
-		move_player(mlx, mlx->game, mlx->player, 0.1, 0);
+		move_player(mlx, mlx->game, mlx->player, 0.2, 0);
 	}
 	if (keycode == LEFT_KEY)
 	{
 		mlx->player->player_angle -= 0.1;
 		if(mlx->player->player_angle < 0)
 			mlx->player->player_angle += 2 * PI;
-		draw_minimap(mlx,mlx->game);
-		draw_minimap_player(mlx,mlx->game);
+		// draw_minimap(mlx,mlx->game);
+		// draw_minimap_player(mlx,mlx->game);
 	}
 	if (keycode == RIGHT_KEY)
 	{
-		mlx->player->player_angle += 0.1;
+		mlx->player->player_angle += 0.2;
 		if(mlx->player->player_angle >= 2 * PI)
 			mlx->player->player_angle -= 2 * PI;
-		draw_minimap(mlx,mlx->game);
-		draw_minimap_player(mlx,mlx->game);
+		// draw_minimap(mlx,mlx->game);
+		// draw_minimap_player(mlx,mlx->game);
 	}
+	start_rays(mlx, mlx->game);
 	return (0);
 }
 
