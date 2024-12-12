@@ -34,7 +34,6 @@ void calculate_ray_init_vals(t_mlx *mlx, t_game *game, size_t x)
 		game->delta_ray_dist_y = fabs(1/(game->raydirect_y + epsilon));
 }
 
-
 //The DDA algorithm will always jump exactly one square each loop, 
 		//either a square in the x-direction, or a square in the y-direction. If it has to go in the negative or positive 
 		//x-direction, and the negative or positive y-direction will 
@@ -58,12 +57,12 @@ void calculate_inital_first_ray_steps(t_mlx *mlx, t_game *game)
 		if (game->raydirect_y < 0)
 		{
 			game->stepy = -1;
-			game->first_ray_dist_y = (mlx->player->player_y - game->map_y) * game->map_y;
+			game->first_ray_dist_y = (mlx->player->player_y - game->map_y) * game->delta_ray_dist_y;
 		}
 		else
 		{
 			game->stepy = 1;
-			game->first_ray_dist_y = (game->map_y +  1.0 - mlx->player->player_y) * game->map_y;
+			game->first_ray_dist_y = (game->map_y +  1.0 - mlx->player->player_y) * game->delta_ray_dist_y;
 		}
 }
 
@@ -92,7 +91,6 @@ void start_rays(t_mlx *mlx, t_game *game)
 // 		step_y = sin(ray_angle) * 0.1;
 		calculate_ray_init_vals(mlx, game, x);
 		calculate_inital_first_ray_steps(mlx, game);
-		
 		//  DDA starts. It's a loop that increments the ray with 1 square every time, until a wall is hit.
 		// Each time, either it jumps a square in the x-direction (with stepX) or a square in the y-direction (with stepY),
 		// it always jumps 1 square at once. If the ray's direction would be the x-direction, the loop will only have to jump a
@@ -125,7 +123,7 @@ void start_rays(t_mlx *mlx, t_game *game)
 				game->map_y += game->stepy;
 				game->side = 1;
 			}
-			if (game->map_x >= 0 && game->map_x < S_WIDTH && game->map_y >= 0 && game->map_y < S_HEIGHT)
+			if (game->map_x >= 0 && game->map_x < game->width && game->map_y >= 0 && game->map_y < game->height)
             {
                 if (game->map_2d[game->map_y][game->map_x] == '1')
                 {
@@ -162,15 +160,15 @@ void start_rays(t_mlx *mlx, t_game *game)
 		}
 		for (int y = 0; y < draw_start; y++)
         {
-			 mlx_put_pixel(buff_data, x, y, 0x87CEEB, size_line, bpp);
+			 mlx_put_pixel(buff_data, x, y, 0x87CEEB, size_line, bpp); //ceelong
         }
-		for (int y = draw_start; y <= draw_end; y++)
+		for (int y = draw_start; y < draw_end; y++)
         {
-			mlx_put_pixel(buff_data, x, y, 0xFFFFFF, size_line, bpp);
+			mlx_put_pixel(buff_data, x, y, 0xFFFFFF, size_line, bpp); //wall
         }
 		for (int y = draw_end; y < S_HEIGHT; y++)
         {
-			mlx_put_pixel(buff_data, x, y, 0x8B4513, size_line, bpp); 
+			mlx_put_pixel(buff_data, x, y, 0x8B4513, size_line, bpp); //floor
         }
 	}
 	mlx_put_image_to_window(mlx->mlx_pointer, mlx->window, buffer, 0, 0);

@@ -45,16 +45,16 @@ void	process_keys(t_mlx *mlx)
 	if (mlx->key_states[ESC_KEY])
 		propper_exit(mlx);
 	if (mlx->key_states[A_KEY])
-		move_player(mlx, mlx->game, mlx->player, 0, -0.1);
+		move_player(mlx, mlx->game, mlx->player, 0, -0.1/2);
 	if (mlx->key_states[D_KEY])
-		move_player(mlx, mlx->game, mlx->player, 0, 0.1);
+		move_player(mlx, mlx->game, mlx->player, 0, 0.1/2);
 	if (mlx->key_states[S_KEY])
-		move_player(mlx, mlx->game, mlx->player, -0.1, 0);
+		move_player(mlx, mlx->game, mlx->player, -0.1/2, 0);
 	if (mlx->key_states[W_KEY])
-		move_player(mlx, mlx->game, mlx->player, 0.1, 0);
+		move_player(mlx, mlx->game, mlx->player, 0.1/2, 0);
 	if (mlx->key_states[LEFT_KEY])
 	{
-		mlx->player->player_angle -= 0.1;
+		mlx->player->player_angle -= 0.1/2;
 		if(mlx->player->player_angle < 0)
 			mlx->player->player_angle += 2 * PI;
 		// draw_minimap(mlx,mlx->game);
@@ -62,7 +62,7 @@ void	process_keys(t_mlx *mlx)
 	}
 	if (mlx->key_states[RIGHT_KEY])
 	{
-		mlx->player->player_angle += 0.2;
+		mlx->player->player_angle += 0.1/2;
 		if(mlx->player->player_angle >= 2 * PI)
 			mlx->player->player_angle -= 2 * PI;
 		// draw_minimap(mlx,mlx->game);
