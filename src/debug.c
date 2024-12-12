@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 09:49:06 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/12 13:10:39 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:19:14 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_map(t_map *head)
 {
-	t_map	*temp;
+	t_map		*temp;
 
 	temp = head;
 	while (temp)
