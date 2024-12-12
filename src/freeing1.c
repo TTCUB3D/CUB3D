@@ -3,29 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   freeing1.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:23:00 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/11 20:23:04 by tlupu            ###   ########.fr       */
+/*   Updated: 2024/12/12 12:30:45 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void free_resources(t_mlx *mlx)
+static void	free_resources(t_mlx *mlx)
 {
-	// size_t	i;
-
-	// i = 0;
-	// while (i < 5)
-	// {
-	// 	if (mlx->img[i])
-	// 	{
-	// 		mlx_destroy_image(mlx, mlx->img[i]);
-	// 		mlx->img[i] = NULL;
-	// 	}
-	// 	i++;
-	// }
 	mlx_destroy_image(mlx->mlx_pointer, mlx->background_img);
 	mlx_destroy_image(mlx->mlx_pointer, mlx->minifloor_img);
 	mlx_destroy_image(mlx->mlx_pointer, mlx->miniplayer_img);
@@ -64,7 +52,7 @@ void	free_program(t_game *game)
 	}
 	if (game->textures)
 	{
-		// free_textures(game->textures);
+		free_textures(game->textures);
 		game->textures = NULL;
 	}
 	exit(0);
@@ -80,7 +68,7 @@ int	propper_exit(t_mlx *mlx)
 
 void	free_list(t_map *head)
 {
-    t_map	*temp;
+	t_map	*temp;
 
 	while (head)
 	{
@@ -91,9 +79,9 @@ void	free_list(t_map *head)
 	}
 }
 
-void free_matrix(char **matrix)
+void	free_matrix(char **matrix)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!matrix)

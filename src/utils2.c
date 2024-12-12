@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 11:56:25 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/11 14:18:45 by tlupu            ###   ########.fr       */
+/*   Updated: 2024/12/12 12:52:36 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,31 @@ void	find_player_pos(t_map *head, size_t *x, size_t *y)
 	}
 }
 
+char	*alloc_fill_row(char *line, size_t width)
+{
+	char	*row;
+	size_t	j;
+
+	row = malloc((width + 1) * sizeof(char));
+	if (!row)
+		return (NULL);
+	j = 0;
+	while (line[j] && j < width)
+	{
+		row[j] = line[j];
+		j++;
+	}
+	while (j < width)
+		row[j++] = ' ';
+	row[j] = '\0';
+	return (row);
+}
+
 char	**convert_map(t_game *game)
 {
 	char	**map_2d;
 	t_map	*temp;
 	size_t	i;
-	size_t	j;
-	size_t	k;
 
 	map_2d = malloc(game->height * sizeof(char *));
 	if (!map_2d)
@@ -52,39 +70,22 @@ char	**convert_map(t_game *game)
 	i = 0;
 	while (temp)
 	{
-		// printf("here\n");
 		if (!temp->line)
 			return (err("Invalid map line!"), NULL);
-		map_2d[i] = malloc((game->width + 1) * sizeof(char));
+		map_2d[i] = alloc_fill_row(temp->line, game->width);
 		if (!map_2d[i])
 		{
-			k = 0;
-			while (k < i)
-			{
-				free(map_2d[k]);
-				k++;
-			}
+			while (i--)
+				free(map_2d[i]);
 			free(map_2d);
 			return (err("Memory error for map row!"), NULL);
 		}
-		j = 0;
-		while (temp->line[j] &&j < game->width)
-		{
-			map_2d[i][j] = temp->line[j];
-			j++;
-		}
-		while (j < game->width)
-			map_2d[i][j++] = ' ';
-		map_2d[i][j] = '\0';
 		temp = temp->next;
 		i++;
 	}
 	return (map_2d);
 }
-int is_space(char c)
-{
-	return (c == 32 || (c >= 9 && c <= 13));
-}
+
 
 void	eliminate_spaces(t_textures *textures)
 {

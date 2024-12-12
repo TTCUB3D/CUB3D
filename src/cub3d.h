@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 10:40:49 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/11 20:31:45 by tlupu            ###   ########.fr       */
+/*   Updated: 2024/12/12 14:43:44 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ typedef struct s_game
 	int				side;
 	size_t			map_x;
 	size_t			map_y;
+	size_t			p_x;
+	size_t			p_y;
 	float			stepx;
 	float			stepy;
 	float			first_ray_dist_x;
@@ -106,14 +108,15 @@ void				start_rays(t_mlx *mlx, t_game *game);
 // INIT
 void				init_game(t_game *game);
 void				init_key_states(bool **key_states);
-void				textrue_init(t_game *game, t_textures *textures);
-void				window_init(t_game *game);
+// void				textrue_init(t_game *game, t_textures *textures);
+// void				window_init(t_game *game);
+void				init_textures(t_game *game);
 // RENDERING
 void				render_map(t_game *game);
 void				render_textures(char target, t_game *game, int x, int y);
 // PARSING
 char				*trim_newline(char *line);
-t_map				*make_map(const char *file_path);
+t_map				*make_map(const char *file_path, int fd);
 void				get_map_dimensions(t_map *head, size_t *width,
 						size_t *height);
 void				find_player_pos(t_map *head, size_t *x, size_t *y);
@@ -125,8 +128,8 @@ void				flood_fill(t_map *head, size_t x, size_t y);
 int					good_input(t_game *game);
 int					parse_textures_colors(t_map **head, t_textures *textures);
 int					parse_color(const char *line, int color[3]);
-void				fill_from_zero(t_map *head);
-void				complete_flood(t_map *head, size_t x, size_t y);
+void				fill_from_zero(t_game *game);
+void				complete_flood(t_game *game, size_t x, size_t y);
 int					is_valid_adjacent(t_map *head, size_t x, size_t y);
 int					has_bad_char(t_map *head);
 int					is_wrong_char(char c);
@@ -145,9 +148,9 @@ void				eliminate_spaces(t_textures *textures);
 void				rmv_space_in_str(char **str);
 int					is_empty_line(char *line);
 char				player_is_char(t_game *game);
+char				*alloc_fill_row(char *line, size_t width);
 // HOOKS
-int					close_on_button(t_mlx *mlx);
-void				process_keys(t_mlx *mlx);
+int					process_keys(t_mlx *mlx);
 int					setup_hooks(t_mlx *mlx);
 
 int					key_press(int keycode, t_mlx *mlx);

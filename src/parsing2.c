@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:48:18 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/03 11:58:07 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/12 15:04:10 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	parse_textures_colors(t_map **head, t_textures *textures)
 		else if (ft_strncmp(current->line, "EA ", 3) == 0)
 			textures->ea_line = ft_strdup(current->line + 3);
 		else if (ft_strncmp(current->line, "WE ", 3) == 0)
-            textures->we_line = ft_strdup(current->line + 3);
+			textures->we_line = ft_strdup(current->line + 3);
 		else if (ft_strncmp(current->line, "F ", 2) == 0)
 		{
 			if (!parse_color(current->line + 2, textures->floor))
@@ -61,10 +61,7 @@ int	parse_color(const char *line, int color[3])
 	while (rgb[i])
 		i++;
 	if (i != 3)
-	{
-		free_matrix(rgb);
-		return (0);
-	}
+		return (free_matrix(rgb), 0);
 	i = 0;
 	while (i < 3)
 	{
@@ -89,9 +86,9 @@ void	flood_fill(t_map *head, size_t x, size_t y)
 	get_map_dimensions(head, &width, &height);
 	if (x >= height || y >= width)
 		return ;
-	current_char = get_char_at(head, x,y);
+	current_char = get_char_at(head, x, y);
 	if (current_char == '1' || current_char == 'F' || current_char == ' ')
-		return;
+		return ;
 	set_char_at(head, x, y, 'F');
 	flood_fill(head, x + 1, y);
 	flood_fill(head, x - 1, y);
@@ -99,8 +96,8 @@ void	flood_fill(t_map *head, size_t x, size_t y)
 	flood_fill(head, x, y - 1);
 }
 
-void complete_flood(t_map *head, size_t x, size_t y)
+void	complete_flood(t_game *game, size_t x, size_t y)
 {
-	flood_fill(head, x, y);
-	fill_from_zero(head);
+	flood_fill(game->map, x, y);
+	fill_from_zero(game);
 }

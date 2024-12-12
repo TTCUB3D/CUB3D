@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 09:49:06 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/11 14:08:10 by tlupu            ###   ########.fr       */
+/*   Updated: 2024/12/12 13:10:39 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,13 @@ void	print_matrix(char **map, size_t height)
 
 void	print_texture_path(t_game *game)
 {
+	int	i;
 	printf("N:%s\nS:%s\nW:%s\nE:%s\n", game->textures->no_line,
 		game->textures->so_line, game->textures->we_line,
 		game->textures->ea_line);
+	i = 0;
+	printf("C:%d, %d, %d\n", game->textures->ceil[i],
+			game->textures->ceil[i + 1], game->textures->ceil[i + 2]);
+	printf("F:%d, %d, %d\n", game->textures->floor[i],
+			game->textures->floor[i + 1], game->textures->floor[i + 2]);
 }
