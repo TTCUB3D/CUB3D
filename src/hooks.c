@@ -1,11 +1,16 @@
-#include "cub3d.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hooks.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/12 12:28:46 by tursescu          #+#    #+#             */
+/*   Updated: 2024/12/12 12:29:01 by tursescu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int	close_on_button(t_mlx *mlx)
-{
-	free(mlx->key_states);
-	propper_exit(mlx);
-	return (0);
-}
+#include "cub3d.h"
 
 void	move_player(t_mlx *mlx, t_game *game, t_player *player, float dx,
 		float dy)
@@ -40,7 +45,7 @@ int key_release(int keycode, t_mlx *mlx)
 	return (0);
 }
 
-void	process_keys(t_mlx *mlx)
+int	process_keys(t_mlx *mlx)
 {
 	if (mlx->key_states[ESC_KEY])
 		propper_exit(mlx);
@@ -69,11 +74,6 @@ void	process_keys(t_mlx *mlx)
 		// draw_minimap_player(mlx,mlx->game);
 	}
 	start_rays(mlx, mlx->game);
-}
-
-int	game_loop(t_mlx *mlx)
-{
-	process_keys(mlx);
 	return (0);
 }
 
@@ -86,7 +86,7 @@ int	setup_hooks(t_mlx *mlx)
 	}
 	mlx_hook(mlx->window, 2, 1L << 0, key_press, mlx);
 	mlx_hook(mlx->window, 3, 1L << 1, key_release, mlx);
-	mlx_hook(mlx->window, 17, 0L, close_on_button, mlx);
-	mlx_loop_hook(mlx->mlx_pointer, game_loop, mlx);
+	mlx_hook(mlx->window, 17, 0L, propper_exit, mlx);
+	mlx_loop_hook(mlx->mlx_pointer, process_keys, mlx);
 	return (0);
 }

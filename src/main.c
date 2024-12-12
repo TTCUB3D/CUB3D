@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/12 12:31:27 by tursescu          #+#    #+#             */
+/*   Updated: 2024/12/12 14:55:49 by tursescu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	start_game(t_mlx *mlx, t_game *game)
@@ -6,8 +18,7 @@ void	start_game(t_mlx *mlx, t_game *game)
 	int	height;
 
 	mlx->mlx_pointer = mlx_init();
-	mlx->window = mlx_new_window(mlx->mlx_pointer, S_WIDTH,
-			S_HEIGHT, "cub3d");
+	mlx->window = mlx_new_window(mlx->mlx_pointer, S_WIDTH, S_HEIGHT, "cub3d");
 	if (!mlx->window)
 	{
 		printf("Error: Window creation failed\n");
@@ -38,10 +49,16 @@ int	main(int ac, char **av)
 
 	init_game(&game);
 	if (ac != 2)
-		err("Invalid ammount of arguments!"), exit(0);
-	game.map = make_map(av[1]);
+	{
+		err("Invalid ammount of arguments!");
+		exit(0);
+	}
+	game.map = make_map(av[1], 0);
 	if (!game.map)
-		err("Failed to parse map."), exit(0);
+	{
+		err("Failed to parse map.");
+		exit(0);
+	}
 	if (!good_input(&game))
 		free_program(&game);
 	init_key_states(&mlx.key_states);
@@ -54,6 +71,8 @@ int	main(int ac, char **av)
 
 int	good_input(t_game *game)
 {
+	game->textures = malloc(sizeof(t_textures));
+	init_textures(game);
 	if (!parse_textures_colors(&(game->map), game->textures))
 		return (0);
 	eliminate_spaces(game->textures);
@@ -76,20 +95,16 @@ int	good_input(t_game *game)
 	return (1);
 }
 
-t_map	*make_map(const char *file_path)
+t_map	*make_map(const char *file_path, int fd)
 {
-	int fd;
-	char *line;
-	t_map *head;
-	t_map *new_node;
+	char	*line;
+	t_map	*head;
+	t_map	*new_node;
 
 	head = NULL;
 	fd = open(file_path, O_RDONLY);
 	if (fd < 0)
-	{
-		perror("Error opening file");
-		return (NULL);
-	}
+		return (err("Error opening file"), NULL);
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -106,6 +121,5 @@ t_map	*make_map(const char *file_path)
 		append_node(&head, new_node);
 		line = get_next_line(fd);
 	}
-	close(fd);
-	return (head);
+	return (close(fd), head);
 }

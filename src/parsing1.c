@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 12:59:58 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/02 13:40:25 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/12 14:57:54 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ char	get_char_at(t_map *head, size_t x, size_t y)
 	if (!temp || y >= ft_strlen(temp->line))
 		return (' ');
 	return (temp->line[y]);
-	
 }
 
 void	set_char_at(t_map *head, size_t x, size_t y, char c)
@@ -69,52 +68,45 @@ void	get_map_dimensions(t_map *head, size_t *width, size_t *height)
 	*height = row_count;
 }
 
-void fill_from_zero(t_map *head)
+void	fill_from_zero(t_game *game)
 {
-	size_t	width, height;
-	size_t  x, y;
 	char	current;
+	size_t	x;
+	size_t	y;
 
-	get_map_dimensions(head, &width, &height);
 	x = 0;
-	while (x < height)
+	while (x < game->height)
 	{
 		y = 0;
-		while (y < width)
+		while (y < game->width)
 		{
-			current = get_char_at(head, x, y);
+			current = get_char_at(game->map, x, y);
 			if (current == '0')
-				flood_fill(head, x, y);
+				flood_fill(game->map, x, y);
 			y++;
 		}
 		x++;
 	}
 }
 
-int is_surrounded(t_game *game)
+int	is_surrounded(t_game *game)
 {
-	size_t	player_x;
-	size_t	player_y;
 	size_t	i;
 	size_t	j;
 	t_map	*temp;
 
-	player_x = 0;
-	player_y = 0;
-	find_player_pos(game->map, &player_x, &player_y);
-	complete_flood(game->map, player_x, player_y);
+	find_player_pos(game->map, &game->p_x, &game->p_y);
+	complete_flood(game, game->p_x, game->p_y);
 	temp = game->map;
 	i = 0;
 	while (temp)
 	{
 		j = 0;
-		while(j < ft_strlen(temp->line))
+		while (j < ft_strlen(temp->line))
 		{
 			if (temp->line[j] == 'F')
-			{
 				if (!is_valid_adjacent(game->map, i, j))
 					return (0);
-			}
 			j++;
 		}
 		temp = temp->next;
