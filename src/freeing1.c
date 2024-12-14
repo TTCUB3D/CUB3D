@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:23:00 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/14 10:09:59 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/14 11:46:23 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 static void	free_resources(t_mlx *mlx)
 {
-	mlx_destroy_image(mlx->mlx_pointer, mlx->background_img);
-	mlx_destroy_image(mlx->mlx_pointer, mlx->minifloor_img);
-	mlx_destroy_image(mlx->mlx_pointer, mlx->miniplayer_img);
+	destroy_all_img(mlx);
 	if (mlx->window)
 	{
 		mlx_clear_window(mlx->mlx_pointer, mlx->window);

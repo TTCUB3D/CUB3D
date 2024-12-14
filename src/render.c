@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/14 10:16:00 by tursescu          #+#    #+#             */
+/*   Updated: 2024/12/14 11:30:36 by tursescu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 //camer_x is the x position on the camera plane that the current x (pos) represents in the screen;
@@ -128,6 +140,21 @@ void start_rays(t_mlx *mlx, t_game *game)
                 if (game->map_2d[game->map_y][game->map_x] == '1')
                 {
                     game->collision = true;
+					//Derermine wall orientation
+					if (game->side == 0)
+					{
+						if (game->raydirect_x > 0)
+							game->wall_orientation = 'e';
+						else
+							game->wall_orientation = 'w';
+					}
+					else
+					{
+						if (game->raydirect_y > 0)
+							game->wall_orientation = 's';
+						else
+							game->wall_orientation = 'n';
+					}
                 }
             }
 			else
@@ -158,13 +185,42 @@ void start_rays(t_mlx *mlx, t_game *game)
 		{
 			draw_end = S_HEIGHT - 1;
 		}
+		char	*text_data;
+		if (game->wall_orientation == 'n')
+			text_data = game->textures->no_data;
+		else if (game->wall_orientation == 's')
+			text_data = game->textures->so_data;
+		else if (game->wall_orientation == 'e')
+			text_data = game->textures->ea_data;
+		else if (game->wall_orientation == 'w')
+			text_data = game->textures->we_data;
 		for (int y = 0; y < draw_start; y++)
         {
 			 mlx_put_pixel(buff_data, x, y, game->textures->ceil_col, size_line, bpp); //ceelong
         }
 		for (int y = draw_start; y < draw_end; y++)
         {
-			mlx_put_pixel(buff_data, x, y, 0xFFFFFF, size_line, bpp); //wall
+			float wall_x;
+			if (game->side == 0)
+			{
+				wall_x = mlx->player->player_y + game->ray_wall_length * game->raydirect_y;
+			}
+			else
+				wall_x = mlx->player->player_x + game->ray_wall_length * game->raydirect_x;
+			wall_x -= floor(wall_x);
+			if (wall_x < 0)
+    			wall_x = 0;
+			else if (wall_x >= 1)
+    			wall_x = 0.9999f;
+			int tex_x = (int)(wall_x * 60);
+			if ((game->side == 0 && game->raydirect_x > 0) || (game->side == 1 && game->raydirect_y < 0))
+			{
+				tex_x = 60 - tex_x - 1;
+			}
+            int tex_y = (int)(y - draw_start) * 60 / screen_line_height;
+			//get the pixel color from texture
+            int color = *((int *)(text_data + tex_y * 60 * (bpp / 8) + tex_x * (bpp / 8)));
+            mlx_put_pixel(buff_data, x, y, color, size_line, bpp); //wall
         }
 		for (int y = draw_end; y < S_HEIGHT; y++)
         {

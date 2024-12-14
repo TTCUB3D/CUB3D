@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 10:40:49 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/14 10:11:27 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/14 11:46:06 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 # define PI 3.14159265
 # define FOV 60
 
-# define TEXTURE_NO "./inc/captain.xpm"
+# define TEXTURE_NO "./inc/NO.xpm"
 # define TEXTURE_SO "./inc/SO.xpm"
 # define TEXTURE_WE "./inc/WE.xpm"
 # define TEXTURE_EA "./inc/EA.xpm"
@@ -66,6 +66,14 @@ typedef struct s_textures
 	char			*so_line;
 	char			*we_line;
 	char			*ea_line;
+	void			*no_text;
+	void			*so_text;
+	void			*we_text;
+	void			*ea_text;
+	char			*no_data;
+	char			*so_data;
+	char			*ea_data;
+	char			*we_data;
 	int				ceil[3];
 	int				floor[3];
 	int				ceil_col;
@@ -87,6 +95,7 @@ typedef struct s_game
 	float			delta_ray_dist_y;
 	float			ray_wall_length;
 	bool			collision;
+	char			wall_orientation;
 	float			camera_x;
 	float			direct_x;
 	float			direct_y;
@@ -114,10 +123,10 @@ void				init_game(t_game *game);
 void				init_key_states(bool **key_states);
 // void				textrue_init(t_game *game, t_textures *textures);
 // void				window_init(t_game *game);
-void				init_textures(t_game *game);
+void				init_textures_lines(t_game *game);
 // RENDERING
-void				render_map(t_game *game);
-void				render_textures(char target, t_game *game, int x, int y);
+// void				render_map(t_game *game);
+// void				render_textures(char target, t_game *game, int x, int y);
 // PARSING
 char				*trim_newline(char *line);
 t_map				*make_map(const char *file_path, int fd);
@@ -159,7 +168,6 @@ int					click_exit(t_mlx *mlx);
 // HOOKS
 int					process_keys(t_mlx *mlx);
 int					setup_hooks(t_mlx *mlx);
-
 int					key_press(int keycode, t_mlx *mlx);
 int 				key_release(int keycode, t_mlx *mlx);
 int					game_loop(t_mlx *mlx);
@@ -170,6 +178,7 @@ void				free_2d_map(t_game *game);
 void				free_textures(t_textures *textures);
 void				free_matrix(char **matrix);
 void				free_program(t_game *game);
+void				destroy_all_img(t_mlx *mlx);
 // DEBUG
 void				print_map(t_map *head);
 void				print_matrix(char **map, size_t height);

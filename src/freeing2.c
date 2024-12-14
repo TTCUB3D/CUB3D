@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 12:14:09 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/10 17:14:18 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/14 11:45:42 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,15 @@ void	free_2d_map(t_game *game)
 		i++;
 	}
 	free(game->map_2d);
+}
+
+void	destroy_all_img(t_mlx *mlx)
+{
+	mlx_destroy_image(mlx->mlx_pointer, mlx->background_img);
+	mlx_destroy_image(mlx->mlx_pointer, mlx->minifloor_img);
+	mlx_destroy_image(mlx->mlx_pointer, mlx->miniplayer_img);
+	mlx_destroy_image(mlx->mlx_pointer, mlx->game->textures->no_text);
+	mlx_destroy_image(mlx->mlx_pointer, mlx->game->textures->so_text);
+	mlx_destroy_image(mlx->mlx_pointer, mlx->game->textures->ea_text);
+	mlx_destroy_image(mlx->mlx_pointer, mlx->game->textures->we_text);
 }

@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 15:32:34 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/12 12:12:34 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/14 11:20:43 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,16 @@ void	init_game(t_game *game)
 	game->map_2d = NULL;
 }
 
-void	init_textures(t_game *game)
+void	init_textures_lines(t_game *game)
 {
 	game->textures->no_line = NULL;
 	game->textures->so_line = NULL;
 	game->textures->we_line = NULL;
 	game->textures->ea_line = NULL;
+	game->textures->no_data = NULL;
+	game->textures->so_data = NULL;
+	game->textures->ea_data = NULL;
+	game->textures->we_data = NULL;
 }
 
 void	init_key_states(bool **key_states)
@@ -45,3 +49,5 @@ void	init_key_states(bool **key_states)
 	}
 	
 }
+
+
