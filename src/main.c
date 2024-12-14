@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 12:31:27 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/12 14:55:49 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/14 10:01:45 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	main(int ac, char **av)
 	game.map = make_map(av[1], 0);
 	if (!game.map)
 	{
-		err("Failed to parse map.");
+		printf("%sFailed to parse map.\n%s", RED, RESET);
 		exit(0);
 	}
 	if (!good_input(&game))
@@ -71,8 +71,11 @@ int	main(int ac, char **av)
 
 int	good_input(t_game *game)
 {
+	t_textures	*temp;
+
 	game->textures = malloc(sizeof(t_textures));
 	init_textures(game);
+	temp = game->textures;
 	if (!parse_textures_colors(&(game->map), game->textures))
 		return (0);
 	eliminate_spaces(game->textures);
@@ -80,8 +83,8 @@ int	good_input(t_game *game)
 		return (err("Player not found"), 0);
 	if (!only_one_player(game->map))
 		return (err("More than one player"), 0);
-	print_texture_path(game);
-	print_map(game->map);
+	temp->ceil_col = rgb_to_hex(temp->ceil[0], temp->ceil[1], temp->ceil[2]);
+	temp->floor_col = rgb_to_hex(temp->floor[0], temp->floor[1],temp->floor[2]);
 	if (has_bad_char(game->map))
 		return (err("Unrecognized charactr"), 0);
 	get_map_dimensions(game->map, &game->width, &game->height);
@@ -104,7 +107,7 @@ t_map	*make_map(const char *file_path, int fd)
 	head = NULL;
 	fd = open(file_path, O_RDONLY);
 	if (fd < 0)
-		return (err("Error opening file"), NULL);
+		return (err("Couldn't open file"), NULL);
 	line = get_next_line(fd);
 	while (line)
 	{

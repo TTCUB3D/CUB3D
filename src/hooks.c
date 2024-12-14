@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 12:28:46 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/12 12:29:01 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/14 10:11:32 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int key_release(int keycode, t_mlx *mlx)
 int	process_keys(t_mlx *mlx)
 {
 	if (mlx->key_states[ESC_KEY])
-		propper_exit(mlx);
+		game_over(mlx);
 	if (mlx->key_states[A_KEY])
 		move_player(mlx, mlx->game, mlx->player, 0, -0.1/2);
 	if (mlx->key_states[D_KEY])
@@ -86,7 +86,7 @@ int	setup_hooks(t_mlx *mlx)
 	}
 	mlx_hook(mlx->window, 2, 1L << 0, key_press, mlx);
 	mlx_hook(mlx->window, 3, 1L << 1, key_release, mlx);
-	mlx_hook(mlx->window, 17, 0L, propper_exit, mlx);
+	mlx_hook(mlx->window, 17, 0L, click_exit, mlx);
 	mlx_loop_hook(mlx->mlx_pointer, process_keys, mlx);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 13:23:00 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/12 12:30:45 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/14 10:09:59 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	free_program(t_game *game)
 
 int	propper_exit(t_mlx *mlx)
 {
-	printf("GAME OVER!\n");
 	free_resources(mlx);
 	free_program(mlx->game);
 	return (0);

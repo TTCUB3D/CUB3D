@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 10:40:49 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/12 14:43:44 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/14 10:11:27 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@
 # define RIGHT_KEY 65363
 # define MAX_KEY_CODE 65364
 # define RED "\033[31m"
+# define BLUE "\033[34m"
+# define YELLOW "\033[33m"
 # define RESET "\033[0m"
 # define GRID_CLOLUR 0x000000
 # define MINI_P_TILE 10
@@ -47,7 +49,7 @@
 # define PI 3.14159265
 # define FOV 60
 
-# define TEXTURE_NO "./inc/NO.xpm"
+# define TEXTURE_NO "./inc/captain.xpm"
 # define TEXTURE_SO "./inc/SO.xpm"
 # define TEXTURE_WE "./inc/WE.xpm"
 # define TEXTURE_EA "./inc/EA.xpm"
@@ -66,6 +68,8 @@ typedef struct s_textures
 	char			*ea_line;
 	int				ceil[3];
 	int				floor[3];
+	int				ceil_col;
+	int				floor_col;
 }					t_textures;
 
 typedef struct s_game
@@ -134,6 +138,7 @@ int					is_valid_adjacent(t_map *head, size_t x, size_t y);
 int					has_bad_char(t_map *head);
 int					is_wrong_char(char c);
 // UTILS
+int					rgb_to_hex(int r, int g, int b);
 int					is_player(char c);
 int					is_space(char c);
 t_map				*create_node(char *line);
@@ -149,6 +154,8 @@ void				rmv_space_in_str(char **str);
 int					is_empty_line(char *line);
 char				player_is_char(t_game *game);
 char				*alloc_fill_row(char *line, size_t width);
+void				game_over(t_mlx *mlx);
+int					click_exit(t_mlx *mlx);
 // HOOKS
 int					process_keys(t_mlx *mlx);
 int					setup_hooks(t_mlx *mlx);

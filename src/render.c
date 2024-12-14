@@ -160,7 +160,7 @@ void start_rays(t_mlx *mlx, t_game *game)
 		}
 		for (int y = 0; y < draw_start; y++)
         {
-			 mlx_put_pixel(buff_data, x, y, 0x87CEEB, size_line, bpp); //ceelong
+			 mlx_put_pixel(buff_data, x, y, game->textures->ceil_col, size_line, bpp); //ceelong
         }
 		for (int y = draw_start; y < draw_end; y++)
         {
@@ -168,7 +168,7 @@ void start_rays(t_mlx *mlx, t_game *game)
         }
 		for (int y = draw_end; y < S_HEIGHT; y++)
         {
-			mlx_put_pixel(buff_data, x, y, 0x8B4513, size_line, bpp); //floor
+			mlx_put_pixel(buff_data, x, y, game->textures->floor_col, size_line, bpp); //floor
         }
 	}
 	mlx_put_image_to_window(mlx->mlx_pointer, mlx->window, buffer, 0, 0);
