@@ -6,7 +6,7 @@
 /*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 12:28:46 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/19 16:49:51 by tlupu            ###   ########.fr       */
+/*   Updated: 2024/12/22 18:23:49 by tlupu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,10 @@ void	move_player(t_mlx *mlx, t_game *game, t_player *player, float dx,
 	float	new_x;
 	float	new_y;
 
-	new_x = player->player_x + dx * cos(mlx->player->player_angle) - dy * sin(mlx->player->player_angle);
-	new_y = player->player_y + dx * sin(mlx->player->player_angle) + dy * cos(mlx->player->player_angle);
+	new_x = player->player_x + dx * cos(mlx->player->player_angle) - dy
+		* sin(mlx->player->player_angle);
+	new_y = player->player_y + dx * sin(mlx->player->player_angle) + dy
+		* cos(mlx->player->player_angle);
 	if (new_x >= 0 && new_x < game->width && new_y >= 0 && new_y < game->height
 		&& game->map_2d[(int)new_y][(int)new_x] != '1')
 	{
@@ -36,7 +38,7 @@ int	key_press(int keycode, t_mlx *mlx)
 	return (0);
 }
 
-int key_release(int keycode, t_mlx *mlx)
+int	key_release(int keycode, t_mlx *mlx)
 {
 	if (keycode >= 0 && keycode < MAX_KEY_CODE)
 		mlx->key_states[keycode] = false;
@@ -48,23 +50,23 @@ int	process_keys(t_mlx *mlx)
 	if (mlx->key_states[ESC_KEY])
 		game_over(mlx);
 	if (mlx->key_states[A_KEY])
-		move_player(mlx, mlx->game, mlx->player, 0, -0.1/2);
+		move_player(mlx, mlx->game, mlx->player, 0, -0.1 / 2);
 	if (mlx->key_states[D_KEY])
-		move_player(mlx, mlx->game, mlx->player, 0, 0.1/2);
+		move_player(mlx, mlx->game, mlx->player, 0, 0.1 / 2);
 	if (mlx->key_states[S_KEY])
-		move_player(mlx, mlx->game, mlx->player, -0.1/2, 0);
+		move_player(mlx, mlx->game, mlx->player, -0.1 / 2, 0);
 	if (mlx->key_states[W_KEY])
-		move_player(mlx, mlx->game, mlx->player, 0.1/2, 0);
+		move_player(mlx, mlx->game, mlx->player, 0.1 / 2, 0);
 	if (mlx->key_states[LEFT_KEY])
 	{
-		mlx->player->player_angle -= 0.1/2;
-		if(mlx->player->player_angle < 0)
+		mlx->player->player_angle -= 0.1 / 2;
+		if (mlx->player->player_angle < 0)
 			mlx->player->player_angle += 2 * PI;
 	}
 	if (mlx->key_states[RIGHT_KEY])
 	{
-		mlx->player->player_angle += 0.1/2;
-		if(mlx->player->player_angle >= 2 * PI)
+		mlx->player->player_angle += 0.1 / 2;
+		if (mlx->player->player_angle >= 2 * PI)
 			mlx->player->player_angle -= 2 * PI;
 	}
 	start_rays(mlx, mlx->game);

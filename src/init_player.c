@@ -6,11 +6,9 @@
 /*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:18:59 by tlupu             #+#    #+#             */
-/*   Updated: 2024/12/19 17:19:00 by tlupu            ###   ########.fr       */
+/*   Updated: 2024/12/22 18:24:49 by tlupu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "cub3d.h"
 
@@ -66,7 +64,7 @@ void	init_x_y(t_player *player, t_game *game)
 	game->direct_y = 0;
 	game->raydirect_x = 0;
 	game->raydirect_y = 0;
-	game-> curr_frame_time = 0;
+	game->curr_frame_time = 0;
 	game->prev_frame_time = 0;
 	game->collision = false;
 }
@@ -84,6 +82,5 @@ t_player	*init_player(t_game *game)
 	player->direction = player_is_char(game);
 	init_angle(player, game);
 	init_x_y(player, game);
-	// init_coordinates(player);
 	return (player);
 }

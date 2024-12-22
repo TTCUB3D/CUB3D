@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 16:24:08 by tursescu          #+#    #+#             */
-/*   Updated: 2024/08/19 12:51:21 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/22 17:49:47 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ft_atoi(const char *str)
 // int main(void)
 // {
 //     char str[] = "2147483649";
-//     printf("my atoi %lld \n", ft_atoi(str));
+//     printf("my atoi %d \n", ft_atoi(str));
 //     printf("man atoi %d", atoi(str));
 // }
 

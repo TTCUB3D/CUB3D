@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 15:32:34 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/14 11:20:43 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/22 11:33:08 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,4 @@ void	init_key_states(bool **key_states)
 		(*key_states)[i] = false;
 		i++;
 	}
-	
 }
-
-
