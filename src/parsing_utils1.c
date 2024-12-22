@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 14:01:04 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/12 14:38:44 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/22 11:31:07 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ int	is_player(char c)
 	return (0);
 }
 
-
-int player_found(t_map *head)
+int	player_found(t_map *head)
 {
 	t_map	*temp;
 
@@ -53,7 +52,7 @@ int	is_valid_adjacent(t_map *head, size_t x, size_t y)
 	char	down;
 	char	left;
 	char	right;
-	
+
 	up = get_char_at(head, x - 1, y);
 	down = get_char_at(head, x + 1, y);
 	left = get_char_at(head, x, y - 1);

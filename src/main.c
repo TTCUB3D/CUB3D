@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 12:31:27 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/14 11:25:39 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/22 11:37:34 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,6 @@ void	start_game(t_mlx *mlx, t_game *game)
 			PATH_TO_MINIFLOOR, &width, &height);
 	mlx->miniplayer_img = mlx_xpm_file_to_image(mlx->mlx_pointer,
 			PATH_TO_MINIPLAYER, &width, &height);
-	// draw_minimap(mlx, game);
-	// draw_minimap_player(mlx, game);
-	// start_rays(mlx, game);
 	mlx->game = game;
 	setup_hooks(mlx);
 	mlx_loop(mlx->mlx_pointer);

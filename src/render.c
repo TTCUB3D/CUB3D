@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 10:16:00 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/14 11:30:36 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/22 11:18:31 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,9 @@ void calculate_ray_init_vals(t_mlx *mlx, t_game *game, size_t x)
     game->direct_y = sin(player_angle);
 
     // Calculate plane vector (perpendicular to direction vector)
-    game->plan_x = -sin(player_angle) * 0.66; // 0.66 is the field of view factor
-    game->plan_y = cos(player_angle) * 0.66;
+	float fov_factor = 0.66;
+    game->plan_x = -sin(player_angle) * fov_factor; // 0.66 is the field of view factor
+    game->plan_y = cos(player_angle) * fov_factor;
 
 	game->camera_x = 2 * x/(float)S_WIDTH - 1;
 		game->raydirect_x = game->direct_x + game->plan_x * game->camera_x; 
@@ -176,11 +177,13 @@ void start_rays(t_mlx *mlx, t_game *game)
 		// printf("ray_wall_length: %f\n", game->ray_wall_length);
 		screen_line_height = (int)(S_HEIGHT / game->ray_wall_length);
 		draw_start = -(screen_line_height / 2) + (S_HEIGHT / 2);
+		draw_end = (screen_line_height / 2) + (S_HEIGHT /2) ;
+		int tex_y_offset = 0;
 		if (draw_start < 0)
 		{
+			tex_y_offset = (-draw_start * TILE_SIZE) / screen_line_height;
 			draw_start = 0;
 		}
-		draw_end = (screen_line_height / 2) + (S_HEIGHT /2) ;
 		if (draw_end >= S_HEIGHT)
 		{
 			draw_end = S_HEIGHT - 1;
@@ -194,37 +197,37 @@ void start_rays(t_mlx *mlx, t_game *game)
 			text_data = game->textures->ea_data;
 		else if (game->wall_orientation == 'w')
 			text_data = game->textures->we_data;
-		for (int y = 0; y < draw_start; y++)
+		for (int y = 0; y < S_HEIGHT; y++)
         {
-			 mlx_put_pixel(buff_data, x, y, game->textures->ceil_col, size_line, bpp); //ceelong
-        }
-		for (int y = draw_start; y < draw_end; y++)
-        {
-			float wall_x;
-			if (game->side == 0)
+			if (y < draw_start)
+				mlx_put_pixel(buff_data, x, y, game->textures->ceil_col, size_line, bpp); //ceiling
+			else if (y >= draw_start && y <= draw_end)
 			{
-				wall_x = mlx->player->player_y + game->ray_wall_length * game->raydirect_y;
+				float wall_x;
+				if (game->side == 0)
+					wall_x = mlx->player->player_y + game->ray_wall_length * game->raydirect_y;
+				else
+					wall_x = mlx->player->player_x + game->ray_wall_length * game->raydirect_x;
+				wall_x -= floor(wall_x);
+				if (wall_x < 0)
+					wall_x = 0;
+				else if (wall_x >= 1)
+					wall_x = 1;
+				int tex_x = (int)(wall_x * TILE_SIZE);
+				if (tex_x >= TILE_SIZE)
+					tex_x = TILE_SIZE - 1;
+				if ((game->side == 0 && game->raydirect_x > 0) || (game->side == 1 && game->raydirect_y < 0))
+				{
+					tex_x = TILE_SIZE - tex_x - 1;
+				}
+				int tex_y = tex_y_offset + ((y - draw_start) * TILE_SIZE) / screen_line_height;
+				if (tex_y >= TILE_SIZE)
+					tex_y = TILE_SIZE - 1;
+				int color = *((int *)(text_data + tex_y * TILE_SIZE * (bpp / 8) + tex_x  * (bpp / 8)));
+    			mlx_put_pixel(buff_data, x, y, color, size_line, bpp); // wall
 			}
 			else
-				wall_x = mlx->player->player_x + game->ray_wall_length * game->raydirect_x;
-			wall_x -= floor(wall_x);
-			if (wall_x < 0)
-    			wall_x = 0;
-			else if (wall_x >= 1)
-    			wall_x = 0.9999f;
-			int tex_x = (int)(wall_x * 60);
-			if ((game->side == 0 && game->raydirect_x > 0) || (game->side == 1 && game->raydirect_y < 0))
-			{
-				tex_x = 60 - tex_x - 1;
-			}
-            int tex_y = (int)(y - draw_start) * 60 / screen_line_height;
-			//get the pixel color from texture
-            int color = *((int *)(text_data + tex_y * 60 * (bpp / 8) + tex_x * (bpp / 8)));
-            mlx_put_pixel(buff_data, x, y, color, size_line, bpp); //wall
-        }
-		for (int y = draw_end; y < S_HEIGHT; y++)
-        {
-			mlx_put_pixel(buff_data, x, y, game->textures->floor_col, size_line, bpp); //floor
+				mlx_put_pixel(buff_data, x, y, game->textures->floor_col, size_line, bpp); //floor
         }
 	}
 	mlx_put_image_to_window(mlx->mlx_pointer, mlx->window, buffer, 0, 0);

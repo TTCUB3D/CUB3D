@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 10:40:49 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/14 11:46:06 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/22 11:24:23 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # include <string.h>
 # include <sys/time.h>
 
-# define TILE_SIZE 120
+# define TILE_SIZE 720
 # define MINI_TILE_SIZE 30
 # define S_WIDTH 1600 // Define screen width
 # define S_HEIGHT 900

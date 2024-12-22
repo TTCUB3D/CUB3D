@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 19:09:20 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/10 16:37:07 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/22 11:32:33 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	has_bad_char(t_map *head)
 	t_map	*temp;
 
 	temp = head;
-	while(temp)
+	while (temp)
 	{
 		i = 0;
 		while (temp->line[i])
@@ -39,7 +39,7 @@ int	is_wrong_char(char c)
 	return (0);
 }
 
-int players_in_row(const char *line)
+int	players_in_row(const char *line)
 {
 	int	count;
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_player.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/22 11:35:34 by tursescu          #+#    #+#             */
+/*   Updated: 2024/12/22 11:37:06 by tursescu         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 void	init_angle(t_player *player, t_game *game)
@@ -106,10 +118,11 @@ void	init_x_y(t_player *player, t_game *game)
 	game->direct_y = 0;
 	game->raydirect_x = 0;
 	game->raydirect_y = 0;
-	game-> curr_frame_time = 0;
+	game->curr_frame_time = 0;
 	game->prev_frame_time = 0;
 	game->collision = false;
 }
+
 t_player	*init_player(t_game *game)
 {
 	t_player	*player;
@@ -123,8 +136,5 @@ t_player	*init_player(t_game *game)
 	player->direction = player_is_char(game);
 	init_angle(player, game);
 	init_x_y(player, game);
-	// init_coordinates(player);
 	return (player);
 }
-
-
