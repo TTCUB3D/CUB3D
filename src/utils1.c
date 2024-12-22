@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 13:47:34 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/03 11:58:17 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/19 17:14:13 by tlupu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ void	append_node(t_map **head, t_map *new_node)
 	t_map	*temp;
 
 	if (!head || !new_node)
-		return;
+		return ;
 	if (*head == NULL)
 	{
 		*head = new_node;
-		return;
+		return ;
 	}
 	else
 	{
@@ -74,10 +74,10 @@ void	append_node(t_map **head, t_map *new_node)
 	}
 }
 
-int has_char(const char *str, char c)
+int	has_char(const char *str, char c)
 {
 	size_t	i;
-	
+
 	i = 0;
 	while (str[i])
 	{

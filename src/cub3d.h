@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 10:40:49 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/14 11:46:06 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/19 17:17:24 by tlupu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,5 +183,7 @@ void				destroy_all_img(t_mlx *mlx);
 void				print_map(t_map *head);
 void				print_matrix(char **map, size_t height);
 void				print_texture_path(t_game *game);
+int	get_player_x_position(t_game *game);
+int	get_player_y_position(t_game *game);
 
 #endif

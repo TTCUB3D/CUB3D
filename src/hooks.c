@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 12:28:46 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/14 10:11:32 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/19 16:49:51 by tlupu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ void	move_player(t_mlx *mlx, t_game *game, t_player *player, float dx,
 		player->player_x = new_x;
 		player->player_y = new_y;
 		mlx->player = player;
-		// draw_minimap(mlx, game);
-		// draw_minimap_player(mlx, game);
 	}
 }
 
@@ -62,16 +60,12 @@ int	process_keys(t_mlx *mlx)
 		mlx->player->player_angle -= 0.1/2;
 		if(mlx->player->player_angle < 0)
 			mlx->player->player_angle += 2 * PI;
-		// draw_minimap(mlx,mlx->game);
-		// draw_minimap_player(mlx,mlx->game);
 	}
 	if (mlx->key_states[RIGHT_KEY])
 	{
 		mlx->player->player_angle += 0.1/2;
 		if(mlx->player->player_angle >= 2 * PI)
 			mlx->player->player_angle -= 2 * PI;
-		// draw_minimap(mlx,mlx->game);
-		// draw_minimap_player(mlx,mlx->game);
 	}
 	start_rays(mlx, mlx->game);
 	return (0);

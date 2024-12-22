@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 12:31:27 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/14 11:25:39 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/19 17:13:42 by tlupu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+// void	load_textures(t_mlx *mlx, t_game *game)
+// {
+	
+// }
 
 void	start_game(t_mlx *mlx, t_game *game)
 {
@@ -23,10 +28,7 @@ void	start_game(t_mlx *mlx, t_game *game)
 	mlx->mlx_pointer = mlx_init();
 	mlx->window = mlx_new_window(mlx->mlx_pointer, S_WIDTH, S_HEIGHT, "cub3d");
 	if (!mlx->window)
-	{
-		printf("Error: Window creation failed\n");
-		exit(1);
-	}
+		propper_exit(mlx);
 	width = 60;
 	height = 60;
 	game->textures->no_text = mlx_xpm_file_to_image(mlx->mlx_pointer, game->textures->no_line, &width, &height);
@@ -37,15 +39,6 @@ void	start_game(t_mlx *mlx, t_game *game)
 	game->textures->ea_data = mlx_get_data_addr(game->textures->ea_text, &bpp, &size_line, &endian);
 	game->textures->we_text = mlx_xpm_file_to_image(mlx->mlx_pointer, game->textures->we_line, &width, &height);
 	game->textures->we_data = mlx_get_data_addr(game->textures->we_text, &bpp, &size_line, &endian);
-	mlx->background_img = mlx_xpm_file_to_image(mlx->mlx_pointer,
-			PATH_TO_MINIMAP, &width, &height);
-	mlx->minifloor_img = mlx_xpm_file_to_image(mlx->mlx_pointer,
-			PATH_TO_MINIFLOOR, &width, &height);
-	mlx->miniplayer_img = mlx_xpm_file_to_image(mlx->mlx_pointer,
-			PATH_TO_MINIPLAYER, &width, &height);
-	// draw_minimap(mlx, game);
-	// draw_minimap_player(mlx, game);
-	// start_rays(mlx, game);
 	mlx->game = game;
 	setup_hooks(mlx);
 	mlx_loop(mlx->mlx_pointer);

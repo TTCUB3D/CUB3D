@@ -1,4 +1,34 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_player.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/19 17:18:59 by tlupu             #+#    #+#             */
+/*   Updated: 2024/12/19 17:19:00 by tlupu            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+
+
 #include "cub3d.h"
+
+void	init_rest_ang(t_player *player, t_game *game)
+{
+	if (player->direction == 'W')
+	{
+		player->player_angle = 3.14159f;
+		game->plan_x = 0;
+		game->plan_y = -0.66;
+	}
+	else if (player->direction == 'E')
+	{
+		player->player_angle = 0.0f;
+		game->plan_x = 0;
+		game->plan_y = 0.66;
+	}
+}
 
 void	init_angle(t_player *player, t_game *game)
 {
@@ -14,19 +44,9 @@ void	init_angle(t_player *player, t_game *game)
 		game->plan_x = -0.66;
 		game->plan_y = 0;
 	}
-	else if (player->direction == 'W')
-	{
-		player->player_angle = 3.14159f;
-		game->plan_x = 0;
-		game->plan_y = -0.66;
-	}
-	else if (player->direction == 'E')
-	{
-		player->player_angle = 0.0f;
-		game->plan_x = 0;
-		game->plan_y = 0.66;
-	}
 	else
+		init_rest_ang(player, game);
+	if (player->direction != 'N' && player->direction != 'S' && player->direction != 'W' && player->direction != 'E')
 	{
 		printf("Error: player coordinates\n");
 		exit(1);
@@ -34,66 +54,6 @@ void	init_angle(t_player *player, t_game *game)
 }
 
 // Initalising player struct
-
-int	get_player_x_position(t_game *game)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (game->map_2d[i])
-	{
-		j = 0;
-		while (game->map_2d[i][j])
-		{
-			if (game->map_2d[i][j] == 'N' || game->map_2d[i][j] == 'S'
-				|| game->map_2d[i][j] == 'W' || game->map_2d[i][j] == 'E')
-				return (j);
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
-
-int	get_player_y_position(t_game *game)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (game->map_2d[i])
-	{
-		j = 0;
-		while (game->map_2d[i][j])
-		{
-			if (game->map_2d[i][j] == 'N' || game->map_2d[i][j] == 'S'
-				|| game->map_2d[i][j] == 'W' || game->map_2d[i][j] == 'E')
-				return (i);
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
-
-// void	init_coordinates(t_player *player)
-// {
-// 	if (player->direction == N)
-// 		player->player_angle = 4.71239f;
-// 	else if (player->direction == S)
-// 		player->player_angle = 4.699998f;
-// 	else if (player->direction == W)
-// 		player->player_angle = 3.14159f;
-// 	else if (player->direction == E)
-// 		player->player_angle = 0.0f;
-// 	else
-//     {
-//         exit(1);
-// 		printf('Error: player coordinates\n");
-//     }
-// }
-
 void	init_x_y(t_player *player, t_game *game)
 {
 	player->player_x = get_player_x_position(game) + 0.003f;
@@ -110,6 +70,7 @@ void	init_x_y(t_player *player, t_game *game)
 	game->prev_frame_time = 0;
 	game->collision = false;
 }
+
 t_player	*init_player(t_game *game)
 {
 	t_player	*player;
@@ -126,5 +87,3 @@ t_player	*init_player(t_game *game)
 	// init_coordinates(player);
 	return (player);
 }
-
-
