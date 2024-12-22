@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 10:16:00 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/22 11:18:31 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/22 17:23:18 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,7 +227,7 @@ void start_rays(t_mlx *mlx, t_game *game)
     			mlx_put_pixel(buff_data, x, y, color, size_line, bpp); // wall
 			}
 			else
-				mlx_put_pixel(buff_data, x, y, game->textures->floor_col, size_line, bpp); //floor
+				mlx_put_pixel(buff_data, x, y, game->textures->fl_col, size_line, bpp); //floor
         }
 	}
 	mlx_put_image_to_window(mlx->mlx_pointer, mlx->window, buffer, 0, 0);

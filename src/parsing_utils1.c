@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 14:01:04 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/22 11:31:07 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/22 17:38:02 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,6 @@ int	is_player(char c)
 {
 	if (c == 'N' || c == 'S' || c == 'W' || c == 'E')
 		return (1);
-	return (0);
-}
-
-int	player_found(t_map *head)
-{
-	t_map	*temp;
-
-	temp = head;
-	while (temp)
-	{
-		if (has_char(temp->line, 'N') || has_char(temp->line, 'S')
-			|| has_char(temp->line, 'W') || has_char(temp->line, 'E'))
-			return (1);
-		temp = temp->next;
-	}
 	return (0);
 }
 

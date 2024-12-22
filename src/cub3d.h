@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 10:40:49 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/22 11:24:23 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/22 18:07:52 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct s_textures
 	int				ceil[3];
 	int				floor[3];
 	int				ceil_col;
-	int				floor_col;
+	int				fl_col;
 }					t_textures;
 
 typedef struct s_game
@@ -114,26 +114,21 @@ typedef struct s_game
 	t_player		*player;
 }					t_game;
 
-void mlx_put_pixel(char *buff_data, int x, int y, int color, int size_line, int bpp);
-
+void				mlx_put_pixel(char *buff_data, int x, int y, int color,
+						int size_line, int bpp);
 
 void				start_rays(t_mlx *mlx, t_game *game);
 // INIT
 void				init_game(t_game *game);
 void				init_key_states(bool **key_states);
-// void				textrue_init(t_game *game, t_textures *textures);
-// void				window_init(t_game *game);
 void				init_textures_lines(t_game *game);
-// RENDERING
-// void				render_map(t_game *game);
-// void				render_textures(char target, t_game *game, int x, int y);
 // PARSING
+int					is_valid_texture_path(const char *path);
 char				*trim_newline(char *line);
 t_map				*make_map(const char *file_path, int fd);
 void				get_map_dimensions(t_map *head, size_t *width,
 						size_t *height);
 void				find_player_pos(t_map *head, size_t *x, size_t *y);
-int					player_found(t_map *head);
 int					only_one_player(t_map *head);
 int					players_in_row(const char *line);
 int					is_surrounded(t_game *game);
@@ -165,11 +160,14 @@ char				player_is_char(t_game *game);
 char				*alloc_fill_row(char *line, size_t width);
 void				game_over(t_mlx *mlx);
 int					click_exit(t_mlx *mlx);
+int					ft_strcmp(const char *s1, const char *s2);
+int					all_paths_valid(t_textures *textures);
+void				put_textures(t_mlx *mlx, t_game *game);
 // HOOKS
 int					process_keys(t_mlx *mlx);
 int					setup_hooks(t_mlx *mlx);
 int					key_press(int keycode, t_mlx *mlx);
-int 				key_release(int keycode, t_mlx *mlx);
+int					key_release(int keycode, t_mlx *mlx);
 int					game_loop(t_mlx *mlx);
 // FREEING
 void				free_list(t_map *head);

@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:48:18 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/22 11:29:50 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/22 18:07:43 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,24 +18,24 @@ int	parse_textures_colors(t_map **head, t_textures *textures)
 	t_map	*current;
 
 	current = *head;
-	while (current)
+	while (current->next)
 	{
-		if (ft_strncmp(current->line, "NO ", 3) == 0)
-			textures->no_line = ft_strdup(current->line + 3);
-		else if (ft_strncmp(current->line, "SO ", 3) == 0)
-			textures->so_line = ft_strdup(current->line + 3);
-		else if (ft_strncmp(current->line, "EA ", 3) == 0)
-			textures->ea_line = ft_strdup(current->line + 3);
-		else if (ft_strncmp(current->line, "WE ", 3) == 0)
-			textures->we_line = ft_strdup(current->line + 3);
-		else if (ft_strncmp(current->line, "F ", 2) == 0)
+		if (ft_strncmp(current->line, "NO", 2) == 0)
+			textures->no_line = ft_strdup(current->line + 2);
+		else if (ft_strncmp(current->line, "SO", 2) == 0)
+			textures->so_line = ft_strdup(current->line + 2);
+		else if (ft_strncmp(current->line, "EA", 2) == 0)
+			textures->ea_line = ft_strdup(current->line + 2);
+		else if (ft_strncmp(current->line, "WE", 2) == 0)
+			textures->we_line = ft_strdup(current->line + 2);
+		else if (ft_strncmp(current->line, "F", 1) == 0)
 		{
-			if (!parse_color(current->line + 2, textures->floor))
+			if (!parse_color(current->line + 1, textures->floor))
 				return (err("Invalid floor color"), 0);
 		}
-		else if (ft_strncmp(current->line, "C ", 2) == 0)
+		else if (ft_strncmp(current->line, "C", 1) == 0)
 		{
-			if (!parse_color(current->line + 2, textures->ceil))
+			if (!parse_color(current->line + 1, textures->ceil))
 				return (err("Invalid ceiling color"), 0);
 		}
 		else
