@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:48:18 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/22 18:07:43 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/22 19:39:41 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,7 @@ int	parse_color(const char *line, int color[3])
 	{
 		color[i] = ft_atoi(rgb[i]);
 		if (color[i] < 0 || color[i] > 255)
-		{
-			free_matrix(rgb);
-			return (0);
-		}
+			return (free_matrix(rgb), 0);
 		i++;
 	}
 	free_matrix(rgb);
