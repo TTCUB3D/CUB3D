@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 10:40:49 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/22 19:13:52 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/23 16:25:55 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_map
 
 typedef struct s_textures
 {
+	bool			should_free;
 	char			*no_line;
 	char			*so_line;
 	char			*we_line;
@@ -114,6 +115,7 @@ typedef struct s_game
 	t_player		*player;
 }					t_game;
 
+
 void				mlx_put_pixel(char *buff_data, int x, int y, int color,
 						int size_line, int bpp);
 
@@ -122,6 +124,8 @@ void				start_rays(t_mlx *mlx, t_game *game);
 void				init_game(t_game *game);
 void				init_key_states(bool **key_states);
 void				init_textures_lines(t_game *game);
+int					get_player_y_position(t_game *game);
+int					get_player_x_position(t_game *game);
 // PARSING
 int					is_valid_texture_path(const char *path);
 char				*trim_newline(char *line);
@@ -163,6 +167,8 @@ int					click_exit(t_mlx *mlx);
 int					ft_strcmp(const char *s1, const char *s2);
 int					all_paths_valid(t_textures *textures);
 void				put_textures(t_mlx *mlx, t_game *game);
+int					only_nb(char *line);
+int					start_with_zero(char *line);
 // HOOKS
 int					process_keys(t_mlx *mlx);
 int					setup_hooks(t_mlx *mlx);

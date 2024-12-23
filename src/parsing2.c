@@ -6,47 +6,35 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/20 16:48:18 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/22 19:39:41 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/23 13:50:00 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-int	parse_textures_colors(t_map **head, t_textures *textures)
+int	only_nb(char *line)
 {
-	t_map	*temp;
-	t_map	*current;
+	int	i;
 
-	current = *head;
-	while (current->next)
-	{
-		if (ft_strncmp(current->line, "NO", 2) == 0)
-			textures->no_line = ft_strdup(current->line + 2);
-		else if (ft_strncmp(current->line, "SO", 2) == 0)
-			textures->so_line = ft_strdup(current->line + 2);
-		else if (ft_strncmp(current->line, "EA", 2) == 0)
-			textures->ea_line = ft_strdup(current->line + 2);
-		else if (ft_strncmp(current->line, "WE", 2) == 0)
-			textures->we_line = ft_strdup(current->line + 2);
-		else if (ft_strncmp(current->line, "F", 1) == 0)
-		{
-			if (!parse_color(current->line + 1, textures->floor))
-				return (err("Invalid floor color"), 0);
-		}
-		else if (ft_strncmp(current->line, "C", 1) == 0)
-		{
-			if (!parse_color(current->line + 1, textures->ceil))
-				return (err("Invalid ceiling color"), 0);
-		}
-		else
-			break ;
-		temp = current;
-		current = current->next;
-		free(temp->line);
-		free(temp);
-	}
-	*head = current;
-	return (1);
+	i = 0;
+	while (is_space(line[i]))
+		i++;
+	while (line[i] >= '0' && line[i] <= '9')
+		i++;
+	while (is_space(line[i]))
+		i++;
+	return (line[i] == '\0');
+}
+
+int	start_with_zero(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (is_space(line[i]))
+		i++;
+	return (line[i] == '0' && line[i + 1] != '\0' && (line[i + 1] >= '0'
+			&& line[i + 1] <= '9'));
 }
 
 int	parse_color(const char *line, int color[3])
@@ -65,6 +53,10 @@ int	parse_color(const char *line, int color[3])
 	i = 0;
 	while (i < 3)
 	{
+		if (start_with_zero(rgb[i]))
+			return (free_matrix(rgb), 0);
+		if (!only_nb(rgb[i]))
+			return (free_matrix(rgb), 0);
 		color[i] = ft_atoi(rgb[i]);
 		if (color[i] < 0 || color[i] > 255)
 			return (free_matrix(rgb), 0);
