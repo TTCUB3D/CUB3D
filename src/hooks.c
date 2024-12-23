@@ -6,28 +6,28 @@
 /*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/12 12:28:46 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/22 18:23:49 by tlupu            ###   ########.fr       */
+/*   Updated: 2024/12/23 16:12:51 by tlupu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	move_player(t_mlx *mlx, t_game *game, t_player *player, float dx,
-		float dy)
+void	move_player(t_mlx *mlx, float dx, float dy)
 {
 	float	new_x;
 	float	new_y;
 
-	new_x = player->player_x + dx * cos(mlx->player->player_angle) - dy
+	new_x = mlx->player->player_x + dx * cos(mlx->player->player_angle) - dy
 		* sin(mlx->player->player_angle);
-	new_y = player->player_y + dx * sin(mlx->player->player_angle) + dy
+	new_y = mlx->player->player_y + dx * sin(mlx->player->player_angle) + dy
 		* cos(mlx->player->player_angle);
-	if (new_x >= 0 && new_x < game->width && new_y >= 0 && new_y < game->height
-		&& game->map_2d[(int)new_y][(int)new_x] != '1')
+	if (new_x >= 0 && new_x < mlx->game->width && new_y >= 0
+		&& new_y < mlx->game->height
+		&& mlx->game->map_2d[(int)new_y][(int)new_x] != '1')
 	{
-		player->player_x = new_x;
-		player->player_y = new_y;
-		mlx->player = player;
+		mlx->player->player_x = new_x;
+		mlx->player->player_y = new_y;
+		mlx->player = mlx->player;
 	}
 }
 
@@ -50,13 +50,13 @@ int	process_keys(t_mlx *mlx)
 	if (mlx->key_states[ESC_KEY])
 		game_over(mlx);
 	if (mlx->key_states[A_KEY])
-		move_player(mlx, mlx->game, mlx->player, 0, -0.1 / 2);
+		move_player(mlx, 0, -0.1 / 2);
 	if (mlx->key_states[D_KEY])
-		move_player(mlx, mlx->game, mlx->player, 0, 0.1 / 2);
+		move_player(mlx, 0, 0.1 / 2);
 	if (mlx->key_states[S_KEY])
-		move_player(mlx, mlx->game, mlx->player, -0.1 / 2, 0);
+		move_player(mlx, -0.1 / 2, 0);
 	if (mlx->key_states[W_KEY])
-		move_player(mlx, mlx->game, mlx->player, 0.1 / 2, 0);
+		move_player(mlx, 0.1 / 2, 0);
 	if (mlx->key_states[LEFT_KEY])
 	{
 		mlx->player->player_angle -= 0.1 / 2;

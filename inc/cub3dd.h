@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3dd.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/23 16:19:07 by tlupu             #+#    #+#             */
+/*   Updated: 2024/12/23 16:20:37 by tlupu            ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3DD_H
 # define CUB3DD_H
 
@@ -14,12 +26,10 @@
 # include <unistd.h>
 
 typedef struct s_game		t_game;
-
 typedef struct s_mini_ray	t_mini_ray;
-// struct to hold all the player info
 typedef struct s_player
 {
-	float player_dlt_x; // player distance x
+	float					player_dlt_x;
 	float					player_dlt_y;
 	float					player_angle;
 	float					player_x;
@@ -31,18 +41,6 @@ typedef struct s_player
 	t_mini_ray				*mini_ray;
 }							t_player;
 
-// typedef struct s_mini_ray
-// {
-// 	float	mini_ray_x;
-// 	float	mini_ray_y;
-// }			t_mini_ray;
-
-// typedef struct s_raycst
-// {
-
-// }			t_raycst;
-
-// need a poiner for each struct for easier acacces
 typedef struct s_mlx
 {
 	void					*background_img;
@@ -53,7 +51,7 @@ typedef struct s_mlx
 	void					*img[4];
 	bool					facts;
 	bool					first_move;
-	t_player *player; // pointer to players struct
+	t_player				*player;
 	t_game					*game;
 	bool					*key_states;
 }							t_mlx;
@@ -62,5 +60,13 @@ t_player					*init_player(t_game *game);
 void						draw_minimap(t_mlx *mlx, t_game *game);
 int							draw_minimap_player(t_mlx *mlx, t_game *game);
 void						init_x_y(t_player *player, t_game *game);
+void						calculate_ray_init_vals(t_mlx *mlx, t_game *game,
+								size_t x);
+void						calculate_inital_first_ray_steps(t_mlx *mlx,
+								t_game *game);
+void						final_dda_inits(t_game *game);
+void						wall_collision_orientations(t_game *game);
+void						mlx_put_pixel_fc(t_game *game, int x, int y,
+								int color);
 
-# endif
+#endif
