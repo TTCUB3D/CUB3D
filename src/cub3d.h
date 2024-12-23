@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 10:40:49 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/23 16:25:55 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/23 16:34:18 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,20 @@ typedef struct s_textures
 
 typedef struct s_game
 {
+	float			wall_x;
+	int				tex_x;
+	int				tex_y;
+	int				color;
+	int				size_line;
+	int				bpp;
+	int				tex_y_offset;
+	char			*text_data;
+	char			*buff_data;
+	void			*buffer;
 	int				side;
+	int				screen_line_height;
+	int				draw_start;
+	int				draw_end;
 	size_t			map_x;
 	size_t			map_y;
 	size_t			p_x;
@@ -115,9 +128,7 @@ typedef struct s_game
 	t_player		*player;
 }					t_game;
 
-
-void				mlx_put_pixel(char *buff_data, int x, int y, int color,
-						int size_line, int bpp);
+void				mlx_put_pixel(t_game *game, int x, int y);
 
 void				start_rays(t_mlx *mlx, t_game *game);
 // INIT
@@ -187,5 +198,7 @@ void				destroy_all_img(t_mlx *mlx);
 void				print_map(t_map *head);
 void				print_matrix(char **map, size_t height);
 void				print_texture_path(t_game *game);
+int					get_player_x_position(t_game *game);
+int					get_player_y_position(t_game *game);
 
 #endif

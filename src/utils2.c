@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 11:56:25 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/14 10:26:25 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/23 16:16:08 by tlupu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ char	**convert_map(t_game *game)
 	}
 	return (map_2d);
 }
-
 
 void	eliminate_spaces(t_textures *textures)
 {
