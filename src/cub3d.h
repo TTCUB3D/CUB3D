@@ -6,7 +6,7 @@
 /*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 10:40:49 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/22 18:23:35 by tlupu            ###   ########.fr       */
+/*   Updated: 2024/12/23 13:41:10 by tlupu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,12 @@ typedef struct s_textures
 
 typedef struct s_game
 {
+	int		tex_y_offset;
+	char *		text_data;
 	int				side;
+	int				screen_line_height;
+	int				draw_start;
+	int				draw_end;
 	size_t			map_x;
 	size_t			map_y;
 	size_t			p_x;
