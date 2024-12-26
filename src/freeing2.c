@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   freeing2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/21 12:14:09 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/22 18:23:45 by tlupu            ###   ########.fr       */
+/*   Updated: 2024/12/26 11:47:13 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,18 @@ void	destroy_all_img(t_mlx *mlx)
 	mlx_destroy_image(mlx->mlx_pointer, mlx->game->textures->so_text);
 	mlx_destroy_image(mlx->mlx_pointer, mlx->game->textures->ea_text);
 	mlx_destroy_image(mlx->mlx_pointer, mlx->game->textures->we_text);
+}
+
+void	free_remaining_lines(t_map **current, t_map **head)
+{
+	t_map	*temp;
+
+	*head = NULL;
+	while (*current)
+	{
+		temp = *current;
+		*current = (*current)->next;
+		free(temp->line);
+		free(temp);
+	}
 }

@@ -6,132 +6,89 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 13:48:52 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/23 16:25:42 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/26 11:48:08 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void assign_val_to_flag(int *arr)
+static int	handle_texture(char *line, int *seen_flag, char **texture_line,
+		char *error_message)
 {
-    int i;
-    
-    i = 0;
-    while (i < 6)
-    {
-        arr[i] = 0;
-        i++;
-    }
+	if ((*seen_flag)++)
+	{
+		err(error_message);
+		return (0);
+	}
+	*texture_line = ft_strdup(line + 2);
+	return (1);
 }
 
+static int	handle_color(char *line, int *seen_flag, int *color_array,
+		char *error_message)
+{
+	if ((*seen_flag)++ || !parse_color(line, color_array))
+	{
+		err(error_message);
+		return (0);
+	}
+	return (1);
+}
+
+static int	process_line(char *str, int *seen_flag, t_textures *textures)
+{
+	if (ft_strncmp(str, "NO", 2) == 0)
+		return (handle_texture(str, &seen_flag[0], &textures->no_line,
+				"Duplicate NO line"));
+	else if (ft_strncmp(str, "SO", 2) == 0)
+		return (handle_texture(str, &seen_flag[1], &textures->so_line,
+				"Duplicate SO line"));
+	else if (ft_strncmp(str, "EA", 2) == 0)
+		return (handle_texture(str, &seen_flag[2], &textures->ea_line,
+				"Duplicate EA line"));
+	else if (ft_strncmp(str, "WE", 2) == 0)
+		return (handle_texture(str, &seen_flag[3], &textures->we_line,
+				"Duplicate WE line"));
+	else if (ft_strncmp(str, "F", 1) == 0)
+		return (handle_color(str + 1, &seen_flag[4], textures->floor,
+				"Invalid floor color or multiple F lines"));
+	else if (ft_strncmp(str, "C", 1) == 0)
+		return (handle_color(str + 1, &seen_flag[5], textures->ceil,
+				"Invalid ceiling color or multiple C lines"));
+	else
+		return (-1);
+}
+
+int	process_all_lines(t_map **current, int *seen_flag, t_textures *textures)
+{
+	t_map	*temp;
+	int		result;
+
+	while ((*current)->next)
+	{
+		result = process_line((*current)->line, seen_flag, textures);
+		if (result == 0 || result == -1)
+			return (result);
+		jump_lines(&temp, current);
+	}
+	return (1);
+}
 
 int	parse_textures_colors(t_map **head, t_textures *textures)
 {
-	t_map	*temp;
 	t_map	*current;
 	int		should_free;
 	int		seen_flag[6];
-	int		i;
 
-    assign_val_to_flag(seen_flag);
 	current = *head;
 	should_free = 1;
-	while (current->next)
-	{
-		if (ft_strncmp(current->line, "NO", 2) == 0)
-		{
-			if (seen_flag[0]++)
-			{
-				err("Duplicate NO line");
-				should_free = 0;
-				break ;
-			}
-			textures->no_line = ft_strdup(current->line + 2);
-		}
-		else if (ft_strncmp(current->line, "SO", 2) == 0)
-		{
-			if (seen_flag[1]++)
-			{
-				err("Duplicate SO line");
-				should_free = 0;
-				break ;
-			}
-			textures->so_line = ft_strdup(current->line + 2);
-		}
-		else if (ft_strncmp(current->line, "EA", 2) == 0)
-		{
-			if (seen_flag[2]++)
-			{
-				err("Duplicate EA line");
-				should_free = 0;
-				break ;
-			}
-			textures->ea_line = ft_strdup(current->line + 2);
-		}
-		else if (ft_strncmp(current->line, "WE", 2) == 0)
-		{
-			if (seen_flag[3]++)
-			{
-				err("Duplicate WE line");
-				should_free = 0;
-				break ;
-			}
-			textures->we_line = ft_strdup(current->line + 2);
-		}
-		else if (ft_strncmp(current->line, "F", 1) == 0)
-		{
-			if (!parse_color(current->line + 1, textures->floor)
-				|| seen_flag[4]++)
-			{
-				err("Invalid floor color or multiple F lines");
-				should_free = 0;
-				break ;
-			}
-		}
-		else if (ft_strncmp(current->line, "C", 1) == 0)
-		{
-			if (!parse_color(current->line + 1, textures->ceil)
-				|| seen_flag[5]++)
-			{
-				err("Invalid ceiling color or multiple C lines");
-				should_free = 0;
-				break ;
-			}
-		}
-		else
-			break ;
-		temp = current;
-		current = current->next;
-		free(temp->line);
-		free(temp);
-	}
+	initialize_seen_flags(seen_flag);
+	should_free = process_all_lines(&current, seen_flag, textures);
+	if (should_free && !check_missing_flags(seen_flag))
+		should_free = 0;
 	if (should_free)
-	{
-		i = 0;
-		while (i < 6)
-		{
-			if (seen_flag[i] == 0)
-			{
-				err("Missing texture path, color or map");
-				free_list(current);
-				*head = NULL;
-				return (0);
-			}
-			i++;
-		}
 		*head = current;
-	}
 	else
-	{
-		*head = NULL;
-		while (current)
-		{
-			temp = current;
-			current = current->next;
-			free(temp->line);
-			free(temp);
-		}
-	}
+		free_remaining_lines(&current, head);
 	return (should_free);
 }
-
