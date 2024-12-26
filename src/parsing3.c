@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 13:48:52 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/23 16:25:42 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/26 12:38:07 by tlupu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,21 @@ static void assign_val_to_flag(int *arr)
     }
 }
 
+// void	is_parsed(t_textures *textures, t_map *current, int seen_flag, int should_free)
+// {
+// 	if (seen_flag)
+// 	{
+// 		err("Duplicate NO line");
+// 		should_free = 0;
+// 		break ;
+// 	}
+// 	else
+// 	{
+		
+// 		textures->no_line = ft_strdup(current->line + 2);
+// 	}
+	
+// }
 
 int	parse_textures_colors(t_map **head, t_textures *textures)
 {
@@ -40,13 +55,8 @@ int	parse_textures_colors(t_map **head, t_textures *textures)
 	{
 		if (ft_strncmp(current->line, "NO", 2) == 0)
 		{
-			if (seen_flag[0]++)
-			{
-				err("Duplicate NO line");
-				should_free = 0;
-				break ;
-			}
-			textures->no_line = ft_strdup(current->line + 2);
+			is_parsed(textures, current, seen_flag, should_free);
+			
 		}
 		else if (ft_strncmp(current->line, "SO", 2) == 0)
 		{
