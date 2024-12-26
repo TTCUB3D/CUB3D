@@ -6,7 +6,7 @@
 /*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/26 11:29:59 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/26 11:45:37 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/26 13:32:17 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,11 @@ void	jump_lines(t_map **temp, t_map **current)
 	*current = (*current)->next;
 	free((*temp)->line);
 	free(*temp);
+}
+
+char	*trim_leading_ws(char *str)
+{
+	while (*str && is_space(*str))
+		str++;
+	return (str);
 }

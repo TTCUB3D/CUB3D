@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 10:40:49 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/26 12:39:48 by tlupu            ###   ########.fr       */
+/*   Updated: 2024/12/26 13:31:26 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,7 @@ int					all_paths_valid(t_textures *textures);
 void				put_textures(t_mlx *mlx, t_game *game);
 int					only_nb(char *line);
 int					start_with_zero(char *line);
+char				*trim_leading_ws(char *str);
 // HOOKS
 int					process_keys(t_mlx *mlx);
 int					setup_hooks(t_mlx *mlx);

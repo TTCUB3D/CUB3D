@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing3.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
+/*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/23 13:48:52 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/26 12:39:16 by tlupu            ###   ########.fr       */
+/*   Updated: 2024/12/26 13:31:10 by tursescu         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ static int	handle_color(char *line, int *seen_flag, int *color_array,
 
 static int	process_line(char *str, int *seen_flag, t_textures *textures)
 {
+	str = trim_leading_ws(str);
 	if (ft_strncmp(str, "NO", 2) == 0)
 		return (handle_texture(str, &seen_flag[0], &textures->no_line,
 				"Duplicate NO line"));
