@@ -6,7 +6,7 @@
 /*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/15 10:40:49 by tursescu          #+#    #+#             */
-/*   Updated: 2024/12/23 17:06:09 by tlupu            ###   ########.fr       */
+/*   Updated: 2024/12/26 12:39:48 by tlupu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ typedef struct s_map
 
 typedef struct s_textures
 {
-	bool			should_free;
 	char			*no_line;
 	char			*so_line;
 	char			*we_line;
@@ -157,6 +156,11 @@ void				complete_flood(t_game *game, size_t x, size_t y);
 int					is_valid_adjacent(t_map *head, size_t x, size_t y);
 int					has_bad_char(t_map *head);
 int					is_wrong_char(char c);
+void				initialize_seen_flags(int *arr);
+int					check_missing_flags(int *seen_flag);
+void				jump_lines(t_map **temp, t_map **current);
+int					process_all_lines(t_map **current, int *seen_flag,
+						t_textures *textures);
 // UTILS
 int					rgb_to_hex(int r, int g, int b);
 int					is_player(char c);
@@ -195,6 +199,7 @@ void				free_textures(t_textures *textures);
 void				free_matrix(char **matrix);
 void				free_program(t_game *game);
 void				destroy_all_img(t_mlx *mlx);
+void				free_remaining_lines(t_map **current, t_map **head);
 // DEBUG
 void				print_map(t_map *head);
 void				print_matrix(char **map, size_t height);

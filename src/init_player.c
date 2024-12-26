@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_player.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tursescu <tursescu@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tlupu <tlupu@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/19 17:18:59 by tlupu             #+#    #+#             */
-/*   Updated: 2024/12/23 16:36:41 by tursescu         ###   ########.fr       */
+/*   Updated: 2024/12/26 13:01:51 by tlupu            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	init_angle(t_player *player, t_game *game)
 	}
 	else if (player->direction == 'S')
 	{
-		player->player_angle = 4.71239f;
+		player->player_angle = -4.71239f;
 		game->plan_x = -0.66;
 		game->plan_y = 0;
 	}
